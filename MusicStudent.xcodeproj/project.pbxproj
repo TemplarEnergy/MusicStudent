@@ -7,17 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B09A4892B41238900DE6D60 /* StudentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09A4882B41238900DE6D60 /* StudentRowView.swift */; };
+		4B09A48B2B44C05200DE6D60 /* PresentationManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09A48A2B44C05200DE6D60 /* PresentationManger.swift */; };
 		4B1D26222B34A57A0014501D /* MusicStudentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26212B34A57A0014501D /* MusicStudentApp.swift */; };
 		4B1D26242B34A57A0014501D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26232B34A57A0014501D /* ContentView.swift */; };
 		4B1D26262B34A57C0014501D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B1D26252B34A57C0014501D /* Assets.xcassets */; };
 		4B1D26292B34A57C0014501D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B1D26282B34A57C0014501D /* Preview Assets.xcassets */; };
 		4B1D262B2B34A57C0014501D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D262A2B34A57C0014501D /* Persistence.swift */; };
 		4B1D262E2B34A57C0014501D /* MusicStudent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D262C2B34A57C0014501D /* MusicStudent.xcdatamodeld */; };
-		4B1D26362B34E81E0014501D /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26352B34E81E0014501D /* UserListView.swift */; };
-		4B1D26382B35E6540014501D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26372B35E6540014501D /* User.swift */; };
+		4B1D26382B35E6540014501D /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26372B35E6540014501D /* Student.swift */; };
+		4B1D263E2B388FA30014501D /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D263D2B388FA30014501D /* DetailView.swift */; };
+		4B1D26402B388FCF0014501D /* FilterOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D263F2B388FCF0014501D /* FilterOptionsView.swift */; };
+		4B1D26422B38AA470014501D /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26412B38AA470014501D /* DatabaseManager.swift */; };
+		4B1D26442B38AEB80014501D /* AddStudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26432B38AEB80014501D /* AddStudentView.swift */; };
+		4B1D26462B38AECB0014501D /* EditStudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26452B38AECB0014501D /* EditStudentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B09A4882B41238900DE6D60 /* StudentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentRowView.swift; sourceTree = "<group>"; };
+		4B09A48A2B44C05200DE6D60 /* PresentationManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationManger.swift; sourceTree = "<group>"; };
 		4B1D261E2B34A57A0014501D /* MusicStudent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicStudent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B1D26212B34A57A0014501D /* MusicStudentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicStudentApp.swift; sourceTree = "<group>"; };
 		4B1D26232B34A57A0014501D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -26,8 +34,13 @@
 		4B1D262A2B34A57C0014501D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		4B1D262D2B34A57C0014501D /* MusicStudent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MusicStudent.xcdatamodel; sourceTree = "<group>"; };
 		4B1D262F2B34A57C0014501D /* MusicStudent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicStudent.entitlements; sourceTree = "<group>"; };
-		4B1D26352B34E81E0014501D /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
-		4B1D26372B35E6540014501D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4B1D26372B35E6540014501D /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		4B1D263D2B388FA30014501D /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		4B1D263F2B388FCF0014501D /* FilterOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionsView.swift; sourceTree = "<group>"; };
+		4B1D26412B38AA470014501D /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		4B1D26432B38AEB80014501D /* AddStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudentView.swift; sourceTree = "<group>"; };
+		4B1D26452B38AECB0014501D /* EditStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentView.swift; sourceTree = "<group>"; };
+		4B7F87DC2B53104B0079EB29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,15 +73,22 @@
 		4B1D26202B34A57A0014501D /* MusicStudent */ = {
 			isa = PBXGroup;
 			children = (
+				4B7F87DC2B53104B0079EB29 /* Info.plist */,
 				4B1D26212B34A57A0014501D /* MusicStudentApp.swift */,
 				4B1D26232B34A57A0014501D /* ContentView.swift */,
+				4B1D26452B38AECB0014501D /* EditStudentView.swift */,
+				4B1D26432B38AEB80014501D /* AddStudentView.swift */,
+				4B09A4882B41238900DE6D60 /* StudentRowView.swift */,
+				4B1D263F2B388FCF0014501D /* FilterOptionsView.swift */,
+				4B1D26412B38AA470014501D /* DatabaseManager.swift */,
+				4B1D26372B35E6540014501D /* Student.swift */,
 				4B1D26252B34A57C0014501D /* Assets.xcassets */,
 				4B1D262A2B34A57C0014501D /* Persistence.swift */,
 				4B1D262F2B34A57C0014501D /* MusicStudent.entitlements */,
 				4B1D262C2B34A57C0014501D /* MusicStudent.xcdatamodeld */,
 				4B1D26272B34A57C0014501D /* Preview Content */,
-				4B1D26352B34E81E0014501D /* UserListView.swift */,
-				4B1D26372B35E6540014501D /* User.swift */,
+				4B1D263D2B388FA30014501D /* DetailView.swift */,
+				4B09A48A2B44C05200DE6D60 /* PresentationManger.swift */,
 			);
 			path = MusicStudent;
 			sourceTree = "<group>";
@@ -151,12 +171,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B09A4892B41238900DE6D60 /* StudentRowView.swift in Sources */,
+				4B1D26422B38AA470014501D /* DatabaseManager.swift in Sources */,
 				4B1D262B2B34A57C0014501D /* Persistence.swift in Sources */,
-				4B1D26362B34E81E0014501D /* UserListView.swift in Sources */,
-				4B1D26382B35E6540014501D /* User.swift in Sources */,
+				4B1D26382B35E6540014501D /* Student.swift in Sources */,
 				4B1D262E2B34A57C0014501D /* MusicStudent.xcdatamodeld in Sources */,
+				4B1D263E2B388FA30014501D /* DetailView.swift in Sources */,
 				4B1D26242B34A57A0014501D /* ContentView.swift in Sources */,
+				4B1D26462B38AECB0014501D /* EditStudentView.swift in Sources */,
+				4B1D26402B388FCF0014501D /* FilterOptionsView.swift in Sources */,
+				4B1D26442B38AEB80014501D /* AddStudentView.swift in Sources */,
 				4B1D26222B34A57A0014501D /* MusicStudentApp.swift in Sources */,
+				4B09A48B2B44C05200DE6D60 /* PresentationManger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,7 +239,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -267,7 +293,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -290,11 +316,15 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MusicStudent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.templarenergyventure.MusicStudent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -317,11 +347,15 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MusicStudent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.templarenergyventure.MusicStudent;
 				PRODUCT_NAME = "$(TARGET_NAME)";

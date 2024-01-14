@@ -8,11 +8,12 @@ import SwiftUI
 
 @main
 struct StudentDatabaseApp: App {
-    @State private var users: [User] = [] // Initialize the users array
+    @State private var users: [Student] = [] // Initialize the users array
 
     var body: some Scene {
         WindowGroup {
-            UserListView()
+            
+            ContentView()
         }
     }
 }
