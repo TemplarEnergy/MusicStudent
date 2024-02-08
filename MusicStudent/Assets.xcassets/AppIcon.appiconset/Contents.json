@@ -26,11 +26,13 @@
       "size" : "128x128"
     },
     {
+      "filename" : "MRSM-256 1.jpeg",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
+      "filename" : "MRSM-256.jpeg",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
@@ -48,6 +50,7 @@
       "size" : "512x512"
     },
     {
+      "filename" : "MRSM-1024.jpeg",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
