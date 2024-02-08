@@ -52,6 +52,7 @@ struct FilterOptionsView: View {
                     Text("Piano").tag("Piano")
                     Text("Trio").tag("Trio")
                     Text("Ensemble").tag("Ensemble")
+                    Text("Pari").tag("Pari")
                 }
                 .onChange(of: selectedInstrument) { newValue in
                     self.filterInstrument = newValue.isEmpty ? nil : newValue

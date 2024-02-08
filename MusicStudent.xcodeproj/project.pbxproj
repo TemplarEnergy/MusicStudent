@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4B09A4892B41238900DE6D60 /* StudentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09A4882B41238900DE6D60 /* StudentRowView.swift */; };
-		4B09A48B2B44C05200DE6D60 /* PresentationManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09A48A2B44C05200DE6D60 /* PresentationManger.swift */; };
 		4B1D26222B34A57A0014501D /* MusicStudentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26212B34A57A0014501D /* MusicStudentApp.swift */; };
 		4B1D26242B34A57A0014501D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26232B34A57A0014501D /* ContentView.swift */; };
 		4B1D26262B34A57C0014501D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B1D26252B34A57C0014501D /* Assets.xcassets */; };
@@ -16,16 +15,26 @@
 		4B1D262B2B34A57C0014501D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D262A2B34A57C0014501D /* Persistence.swift */; };
 		4B1D262E2B34A57C0014501D /* MusicStudent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D262C2B34A57C0014501D /* MusicStudent.xcdatamodeld */; };
 		4B1D26382B35E6540014501D /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26372B35E6540014501D /* Student.swift */; };
-		4B1D263E2B388FA30014501D /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D263D2B388FA30014501D /* DetailView.swift */; };
 		4B1D26402B388FCF0014501D /* FilterOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D263F2B388FCF0014501D /* FilterOptionsView.swift */; };
 		4B1D26422B38AA470014501D /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26412B38AA470014501D /* DatabaseManager.swift */; };
 		4B1D26442B38AEB80014501D /* AddStudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26432B38AEB80014501D /* AddStudentView.swift */; };
 		4B1D26462B38AECB0014501D /* EditStudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D26452B38AECB0014501D /* EditStudentView.swift */; };
+		4B2A46712B6B0BD7003EFF55 /* PopulateDatabaseFromCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A46702B6B0BD7003EFF55 /* PopulateDatabaseFromCalendar.swift */; };
+		4B2A46732B6EAB00003EFF55 /* HeadTeacherInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A46722B6EAB00003EFF55 /* HeadTeacherInputView.swift */; };
+		4B2A46752B6EAC4E003EFF55 /* PlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A46742B6EAC4E003EFF55 /* PlistManager.swift */; };
+		4B84CD082B67D3FD00EC2DC5 /* HeadTeacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B84CD072B67D3FD00EC2DC5 /* HeadTeacher.swift */; };
+		4B8DC11D2B743E2D00D4C4BC /* CreateInvoicePDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8DC11C2B743E2D00D4C4BC /* CreateInvoicePDF.swift */; };
+		4BD4554D2B62B8C700F2BA2C /* InvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD4554C2B62B8C700F2BA2C /* InvoiceView.swift */; };
+		4BD4554F2B62BAC800F2BA2C /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD4554E2B62BAC800F2BA2C /* PresentationManager.swift */; };
+		4BD455512B62C37800F2BA2C /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD455502B62C37800F2BA2C /* Teacher.swift */; };
+		4BFF0FD42B70427E0086DDDF /* TaughtInstrumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */; };
+		4BFF0FD62B7042950086DDDF /* LessonRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD52B7042950086DDDF /* LessonRateView.swift */; };
+		4BFF0FD82B7065A40086DDDF /* LessonDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD72B7065A40086DDDF /* LessonDataManager.swift */; };
+		4BFF0FDA2B7138160086DDDF /* InstrumentDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD92B7138160086DDDF /* InstrumentDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4B09A4882B41238900DE6D60 /* StudentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentRowView.swift; sourceTree = "<group>"; };
-		4B09A48A2B44C05200DE6D60 /* PresentationManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationManger.swift; sourceTree = "<group>"; };
 		4B1D261E2B34A57A0014501D /* MusicStudent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicStudent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B1D26212B34A57A0014501D /* MusicStudentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicStudentApp.swift; sourceTree = "<group>"; };
 		4B1D26232B34A57A0014501D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -35,12 +44,23 @@
 		4B1D262D2B34A57C0014501D /* MusicStudent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MusicStudent.xcdatamodel; sourceTree = "<group>"; };
 		4B1D262F2B34A57C0014501D /* MusicStudent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicStudent.entitlements; sourceTree = "<group>"; };
 		4B1D26372B35E6540014501D /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
-		4B1D263D2B388FA30014501D /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		4B1D263F2B388FCF0014501D /* FilterOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionsView.swift; sourceTree = "<group>"; };
 		4B1D26412B38AA470014501D /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		4B1D26432B38AEB80014501D /* AddStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudentView.swift; sourceTree = "<group>"; };
 		4B1D26452B38AECB0014501D /* EditStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentView.swift; sourceTree = "<group>"; };
+		4B2A46702B6B0BD7003EFF55 /* PopulateDatabaseFromCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopulateDatabaseFromCalendar.swift; sourceTree = "<group>"; };
+		4B2A46722B6EAB00003EFF55 /* HeadTeacherInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadTeacherInputView.swift; sourceTree = "<group>"; };
+		4B2A46742B6EAC4E003EFF55 /* PlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManager.swift; sourceTree = "<group>"; };
 		4B7F87DC2B53104B0079EB29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4B84CD072B67D3FD00EC2DC5 /* HeadTeacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadTeacher.swift; sourceTree = "<group>"; };
+		4B8DC11C2B743E2D00D4C4BC /* CreateInvoicePDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInvoicePDF.swift; sourceTree = "<group>"; };
+		4BD4554C2B62B8C700F2BA2C /* InvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceView.swift; sourceTree = "<group>"; };
+		4BD4554E2B62BAC800F2BA2C /* PresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
+		4BD455502B62C37800F2BA2C /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
+		4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaughtInstrumentView.swift; sourceTree = "<group>"; };
+		4BFF0FD52B7042950086DDDF /* LessonRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRateView.swift; sourceTree = "<group>"; };
+		4BFF0FD72B7065A40086DDDF /* LessonDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDataManager.swift; sourceTree = "<group>"; };
+		4BFF0FD92B7138160086DDDF /* InstrumentDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,20 +95,30 @@
 			children = (
 				4B7F87DC2B53104B0079EB29 /* Info.plist */,
 				4B1D26212B34A57A0014501D /* MusicStudentApp.swift */,
+				4B1D26432B38AEB80014501D /* AddStudentView.swift */,
 				4B1D26232B34A57A0014501D /* ContentView.swift */,
 				4B1D26452B38AECB0014501D /* EditStudentView.swift */,
-				4B1D26432B38AEB80014501D /* AddStudentView.swift */,
-				4B09A4882B41238900DE6D60 /* StudentRowView.swift */,
 				4B1D263F2B388FCF0014501D /* FilterOptionsView.swift */,
-				4B1D26412B38AA470014501D /* DatabaseManager.swift */,
-				4B1D26372B35E6540014501D /* Student.swift */,
+				4B2A46722B6EAB00003EFF55 /* HeadTeacherInputView.swift */,
+				4BD4554C2B62B8C700F2BA2C /* InvoiceView.swift */,
+				4B09A4882B41238900DE6D60 /* StudentRowView.swift */,
+				4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */,
 				4B1D26252B34A57C0014501D /* Assets.xcassets */,
 				4B1D262A2B34A57C0014501D /* Persistence.swift */,
 				4B1D262F2B34A57C0014501D /* MusicStudent.entitlements */,
 				4B1D262C2B34A57C0014501D /* MusicStudent.xcdatamodeld */,
 				4B1D26272B34A57C0014501D /* Preview Content */,
-				4B1D263D2B388FA30014501D /* DetailView.swift */,
-				4B09A48A2B44C05200DE6D60 /* PresentationManger.swift */,
+				4B84CD072B67D3FD00EC2DC5 /* HeadTeacher.swift */,
+				4B1D26372B35E6540014501D /* Student.swift */,
+				4BD455502B62C37800F2BA2C /* Teacher.swift */,
+				4B8DC11C2B743E2D00D4C4BC /* CreateInvoicePDF.swift */,
+				4B2A46702B6B0BD7003EFF55 /* PopulateDatabaseFromCalendar.swift */,
+				4B1D26412B38AA470014501D /* DatabaseManager.swift */,
+				4BFF0FD92B7138160086DDDF /* InstrumentDataManager.swift */,
+				4BFF0FD72B7065A40086DDDF /* LessonDataManager.swift */,
+				4BFF0FD52B7042950086DDDF /* LessonRateView.swift */,
+				4B2A46742B6EAC4E003EFF55 /* PlistManager.swift */,
+				4BD4554E2B62BAC800F2BA2C /* PresentationManager.swift */,
 			);
 			path = MusicStudent;
 			sourceTree = "<group>";
@@ -171,18 +201,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B8DC11D2B743E2D00D4C4BC /* CreateInvoicePDF.swift in Sources */,
 				4B09A4892B41238900DE6D60 /* StudentRowView.swift in Sources */,
 				4B1D26422B38AA470014501D /* DatabaseManager.swift in Sources */,
+				4BFF0FDA2B7138160086DDDF /* InstrumentDataManager.swift in Sources */,
+				4B84CD082B67D3FD00EC2DC5 /* HeadTeacher.swift in Sources */,
 				4B1D262B2B34A57C0014501D /* Persistence.swift in Sources */,
+				4BFF0FD42B70427E0086DDDF /* TaughtInstrumentView.swift in Sources */,
 				4B1D26382B35E6540014501D /* Student.swift in Sources */,
+				4BD455512B62C37800F2BA2C /* Teacher.swift in Sources */,
+				4B2A46752B6EAC4E003EFF55 /* PlistManager.swift in Sources */,
 				4B1D262E2B34A57C0014501D /* MusicStudent.xcdatamodeld in Sources */,
-				4B1D263E2B388FA30014501D /* DetailView.swift in Sources */,
 				4B1D26242B34A57A0014501D /* ContentView.swift in Sources */,
 				4B1D26462B38AECB0014501D /* EditStudentView.swift in Sources */,
 				4B1D26402B388FCF0014501D /* FilterOptionsView.swift in Sources */,
+				4B2A46712B6B0BD7003EFF55 /* PopulateDatabaseFromCalendar.swift in Sources */,
+				4BD4554D2B62B8C700F2BA2C /* InvoiceView.swift in Sources */,
+				4BD4554F2B62BAC800F2BA2C /* PresentationManager.swift in Sources */,
+				4BFF0FD62B7042950086DDDF /* LessonRateView.swift in Sources */,
 				4B1D26442B38AEB80014501D /* AddStudentView.swift in Sources */,
+				4B2A46732B6EAB00003EFF55 /* HeadTeacherInputView.swift in Sources */,
 				4B1D26222B34A57A0014501D /* MusicStudentApp.swift in Sources */,
-				4B09A48B2B44C05200DE6D60 /* PresentationManger.swift in Sources */,
+				4BFF0FD82B7065A40086DDDF /* LessonDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,8 +357,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MusicStudent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_CFBundleDisplayName = "Music Student";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to fetch events.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -348,8 +389,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MusicStudent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_CFBundleDisplayName = "Music Student";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to fetch events.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

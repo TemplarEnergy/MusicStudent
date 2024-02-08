@@ -24,7 +24,7 @@ struct StudentRowView: View {
                 Text("\(student.instrument)")
                     .padding()
 
-                Text("\(student.lessonDay)")
+                Text("\(student.lessons.first?.day ?? "")")
                     .padding()
             }
         }
@@ -35,14 +35,26 @@ struct StudentRowView: View {
 struct StudentRowView_Previews: PreviewProvider {
     static var previews: some View {
         StudentRowView(student: Student(
-            firstName: "John",
-            lastName: "Doe",
-            parentsName: "Jane Doe",
+            studentNumber: "",
+            firstName: "",
+            lastName: "",
+            parentsName: "",
+            parentsLastName: "",
+            phoneNumber: "",
+            phoneNumber2: "",
+            street1: "",
+            street2: "",
+            city: "",
+            county: "",
+            country: "UK",
+            postalCode: "",
+            email: "",
             instrument: "Violin",
-            lessonDay: "Monday",
-            lessonTime: Date(),
-            duration: "30",
-            kit: ["Accessory1", "Accessory2"],
+            nominalDay: "",
+            nominalTime: Date(),
+            nominalDuration: "",
+            lessons: [],
+            kit: [],
             active: true
         ))
     }
