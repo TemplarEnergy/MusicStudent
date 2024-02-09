@@ -101,6 +101,7 @@
 				4B1D263F2B388FCF0014501D /* FilterOptionsView.swift */,
 				4B2A46722B6EAB00003EFF55 /* HeadTeacherInputView.swift */,
 				4BD4554C2B62B8C700F2BA2C /* InvoiceView.swift */,
+				4BFF0FD52B7042950086DDDF /* LessonRateView.swift */,
 				4B09A4882B41238900DE6D60 /* StudentRowView.swift */,
 				4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */,
 				4B1D26252B34A57C0014501D /* Assets.xcassets */,
@@ -116,7 +117,6 @@
 				4B1D26412B38AA470014501D /* DatabaseManager.swift */,
 				4BFF0FD92B7138160086DDDF /* InstrumentDataManager.swift */,
 				4BFF0FD72B7065A40086DDDF /* LessonDataManager.swift */,
-				4BFF0FD52B7042950086DDDF /* LessonRateView.swift */,
 				4B2A46742B6EAC4E003EFF55 /* PlistManager.swift */,
 				4BD4554E2B62BAC800F2BA2C /* PresentationManager.swift */,
 			);

@@ -16,6 +16,42 @@ struct HeadTeacherInputView: View {
     var body: some View {
         NavigationView {
             ScrollView {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button("Change Rates") {
+                        isShowLessonPrices.toggle()
+                    }
+                    .padding(20)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .sheet(isPresented: $isShowLessonPrices ) {
+                        // Show the invoice view when the flag is true
+                        
+                        LessonRateView(
+                            isShowLessonPrices: $isShowLessonPrices
+                        )
+                    }
+                    .cornerRadius(8)
+                    Spacer()
+                    Button("Change Instruments") {
+                        isShowTaughtInstruments.toggle()
+                    }
+                    .padding(20)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .sheet(isPresented: $isShowTaughtInstruments ) {
+                        // Show the invoice view when the flag is true
+                        
+                        TaughtInstrumentView(
+                            isShowTaughtInstruments: $isShowTaughtInstruments
+                        )
+                    }
+                    .cornerRadius(8)
+                    Spacer()
+                }
+               
+                
                 Form {
                     Section(header: Text("Company Information")
                         .foregroundColor(.olive) // Change text color
