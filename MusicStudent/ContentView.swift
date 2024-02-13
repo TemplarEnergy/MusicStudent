@@ -408,7 +408,6 @@ public struct ContentView: View {
     
     
     
-    
     private func updateFilteredStudents() {
         // Define the order of days of the week
         let dayOrder: [String: Int] = [
@@ -421,11 +420,19 @@ public struct ContentView: View {
             "Sunday": 7
         ]
         
-        // Sort the students by day of the week
-        filteredStudents = students.sorted { student1, student2 in
+        // Filter and sort the students
+        filteredStudents = students.filter { student in
+            // Apply the filter conditions
+            let dayFilterPass = filterOptions.filterDay == nil || student.nominalDay == filterOptions.filterDay
+            let instrumentFilterPass = filterOptions.filterInstrument == nil || student.instrument == filterOptions.filterInstrument
+            let activeFilterPass = filterOptions.filterActive == nil || student.active == filterOptions.filterActive
+            let searchFilterPass = searchQuery.isEmpty || "\(student.firstName) \(student.lastName)".lowercased().contains(searchQuery.lowercased())
+            
+            return dayFilterPass && instrumentFilterPass && activeFilterPass && searchFilterPass
+        }.sorted { student1, student2 in
             // Ensure both students have a nominalDay property
-           let day1 = student1.nominalDay
-             let day2 = student2.nominalDay 
+         let day1 = student1.nominalDay
+            let day2 = student2.nominalDay
             
             // Get the numerical order of the days
             guard let order1 = dayOrder[day1], let order2 = dayOrder[day2] else {
@@ -433,16 +440,18 @@ public struct ContentView: View {
                 return false
             }
             
-            // Compare the numerical order of the days
             if order1 != order2 {
                 // If the days are different, sort based on their numerical order
                 return order1 < order2
             } else {
                 // If the days are the same, sort based on the lesson time
+                
+                // Compare the nominalTime properties
                 return student1.nominalTime < student2.nominalTime
             }
         }
     }
+
     
 }
 
