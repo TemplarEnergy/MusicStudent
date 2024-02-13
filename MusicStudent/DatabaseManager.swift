@@ -23,7 +23,7 @@ class DatabaseManager {
     
     func loadStudents() -> [Student] {
         do {
-           print("the url is \(databaseURL)")
+   //        print("the url is \(databaseURL)")
             let data = try Data(contentsOf: databaseURL)
             return try JSONDecoder().decode([Student].self, from: data)
         } catch {

@@ -330,7 +330,7 @@ struct InvoiceView: View {
             var invoiceName: String = "" // Declare invoiceName as a local variable
             invoiceTotal = viewModel.findTotalPrice(for: student) // Call instance method on the instance
             invoiceName = viewModel.findInvoiceName(for: student) // Call instance method on the instance
-            createInvoicePDF(student: student, invoiceTotal: invoiceTotal, headTeacher: unwrappedHeadTeacher, fileName: fileName, invoiceName: invoiceName)
+            createInvoicePDF(student: student, invoiceTotal: invoiceTotal, headTeacher: unwrappedHeadTeacher, fileName: fileName, invoiceName: invoiceName,  isInvoiceSheetPresented: $isInvoiceSheetPresented)
         } else {
             // Handle the case where headTeacher is nil
         }

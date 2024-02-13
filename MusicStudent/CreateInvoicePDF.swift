@@ -12,7 +12,8 @@ import PDFKit
 import Foundation
 import UniformTypeIdentifiers
  
-func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadTeacher, fileName: String, invoiceName: String)  {
+func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadTeacher, fileName: String, invoiceName: String,  isInvoiceSheetPresented: Binding<Bool>) {
+    
     
     
     // Create a PDF document
@@ -262,7 +263,7 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
     pdfDocument.insert(pdfPage, at: pdfDocument.pageCount)
     
     
-    savePDF(pdfDocument, withFileName: fileName)
+    savePDF(pdfDocument, withFileName: fileName,  isInvoiceSheetPresented: isInvoiceSheetPresented)
     
 }
 
@@ -311,7 +312,7 @@ private func InvoiceIdDate() -> String {
     return dateFormatter.string(from: Date())
 }
 
-private func savePDF(_ pdfDocument: PDFDocument, withFileName fileName: String) {
+private func savePDF(_ pdfDocument: PDFDocument, withFileName fileName: String, isInvoiceSheetPresented: Binding<Bool>) {
     let savePanel = NSSavePanel()
     savePanel.allowedContentTypes = [UTType.pdf]
     savePanel.nameFieldStringValue = fileName
@@ -320,6 +321,7 @@ private func savePDF(_ pdfDocument: PDFDocument, withFileName fileName: String) 
         if result == .OK, let url = savePanel.url {
             pdfDocument.write(to: url)
             print("Saved PDF to: \(url)")
+            isInvoiceSheetPresented.wrappedValue = false
         }
     }
 }
