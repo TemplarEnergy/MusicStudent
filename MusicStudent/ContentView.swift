@@ -410,15 +410,39 @@ public struct ContentView: View {
     
     
     private func updateFilteredStudents() {
-        filteredStudents = students.filter { student in
-            let dayFilterPass = filterOptions.filterDay == nil || student.nominalDay == filterOptions.filterDay
-            let instrumentFilterPass = filterOptions.filterInstrument == nil || student.instrument == filterOptions.filterInstrument
-            let activeFilterPass = filterOptions.filterActive == nil || student.active == filterOptions.filterActive
-            let searchFilterPass = searchQuery.isEmpty || "\(student.firstName) \(student.lastName)".lowercased().contains(searchQuery.lowercased())
-            return dayFilterPass && instrumentFilterPass && activeFilterPass && searchFilterPass
+        // Define the order of days of the week
+        let dayOrder: [String: Int] = [
+            "Monday": 1,
+            "Tuesday": 2,
+            "Wednesday": 3,
+            "Thursday": 4,
+            "Friday": 5,
+            "Saturday": 6,
+            "Sunday": 7
+        ]
+        
+        // Sort the students by day of the week
+        filteredStudents = students.sorted { student1, student2 in
+            // Ensure both students have a nominalDay property
+           let day1 = student1.nominalDay
+             let day2 = student2.nominalDay 
+            
+            // Get the numerical order of the days
+            guard let order1 = dayOrder[day1], let order2 = dayOrder[day2] else {
+                // Handle the case where the day of the week is not recognized
+                return false
+            }
+            
+            // Compare the numerical order of the days
+            if order1 != order2 {
+                // If the days are different, sort based on their numerical order
+                return order1 < order2
+            } else {
+                // If the days are the same, sort based on the lesson time
+                return student1.nominalTime < student2.nominalTime
+            }
         }
     }
-    
     
 }
 
