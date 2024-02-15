@@ -268,8 +268,11 @@ struct InvoiceView: View {
                         
                     }
                     .padding()
+                    .buttonStyle(ControlButtonStyle(backgroundColor: Color.olive))
+                    
                     Button("Cancel Student") {
-                        
+                        // Move to the next student
+                        currentIndex += 1
                         
                         // Check if there are more students to process
                         if currentIndex >= listStudents.count {
@@ -279,6 +282,7 @@ struct InvoiceView: View {
                         }
                        
                     }
+                    .buttonStyle(ControlButtonStyle(backgroundColor: Color.gold))
           
                     
                    if listStudents.count > 1 {
@@ -287,6 +291,7 @@ struct InvoiceView: View {
                             isInvoiceSheetPresented = false
                            isSheetPresented = false
                         }
+                        .buttonStyle(ControlButtonStyle(backgroundColor: Color.red))
                     }
                     
                 }
