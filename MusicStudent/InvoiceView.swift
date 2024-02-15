@@ -253,21 +253,31 @@ struct InvoiceView: View {
          
         
                     Button("Save PDF") {
+                        // Generate PDF for the current student
                         generatePDF()
-                  //      isInvoiceSheetPresented = false
-                 //       isSheetPresented.toggle()
+                        
+                        
+                        // Check if there are more students to process
+                        if currentIndex >= listStudents.count {
+                            // Dismiss the InvoiceView if all students are processed
+                            isInvoiceSheetPresented = false
+                            isSheetPresented = false
+                        } else {
+                            isInvoiceSheetPresented = true
+                        }
                         
                     }
                     .padding()
                     Button("Cancel Student") {
-                        currentIndex += 1
-                        if let lessonCount = studentPDF?.lessons.count, currentIndex >= lessonCount {
+                        
+                        
+                        // Check if there are more students to process
+                        if currentIndex >= listStudents.count {
+                            // Dismiss the InvoiceView if all students are processed
                             isInvoiceSheetPresented = false
-                        }
-                        if currentIndex + 1 > listStudents.count {
                             isSheetPresented = false
                         }
-                        
+                       
                     }
           
                     

@@ -321,7 +321,6 @@ private func savePDF(_ pdfDocument: PDFDocument, withFileName fileName: String, 
         if result == .OK, let url = savePanel.url {
             pdfDocument.write(to: url)
             print("Saved PDF to: \(url)")
-            isInvoiceSheetPresented.wrappedValue = false
         }
     }
 }
