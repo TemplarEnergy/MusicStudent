@@ -336,7 +336,7 @@ struct EditStudentView: View {
                                     .alert(isPresented: $showLessonAlert) {
                                         Alert(
                                             title: Text("Confirm Deletion"),
-                                            message: Text("Are you sure you want to delete this Lesson?"),
+                                            message: Text("Are you sure you want to delete this Lesson? This change is only for this session. For a permanent change remove Lesson for calendar"),
                                             primaryButton: .destructive(Text("Delete")) {
                                                 // Call your delete function here
                                                 deleteLesson(at: selectedLessonIndex ?? 0)
@@ -556,13 +556,14 @@ struct EditStudentView: View {
                         .alert(isPresented: $showStudentAlert) {
                             Alert(
                                 title: Text("Confirm Deletion"),
-                                message: Text("Are you sure you want to delete this Student?"),
+                                message: Text("Are you sure you want to delete this Student? For a permanent removal remove student from Calendar entries"),
                                 primaryButton: .destructive(Text("Delete")) {
                                     // Call your delete function hereif let unwrappedEditedStudent = editedStudent {
                                     // Update the properties of the existing student
                                     if let unwrappedEditedStudent = editedStudent {
                                         let updatedStudent = unwrappedEditedStudent
                                         DatabaseManager.shared.deleteStudent(updatedStudent)
+                                        isSheetPresented = false
                                     }
                                 },
                                 
