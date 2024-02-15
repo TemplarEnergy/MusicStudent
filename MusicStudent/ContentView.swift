@@ -254,7 +254,7 @@ public struct ContentView: View {
                                 loadData()
                                 if let unwrappedHeadTeacher = headTeacher {
                                     FromCalendar.PopulateStudents(headTeacher: unwrappedHeadTeacher)
-                                    FromCalendar.PopulateLessons(headTeacher: unwrappedHeadTeacher)
+                                    _ = FromCalendar.PopulateLessonDatabaseFromCalendar()
                                 }
                             }
                             .padding()
@@ -289,19 +289,12 @@ public struct ContentView: View {
                         loadData()
                         if let unwrappedHeadTeacher = headTeacher {
                             FromCalendar.PopulateStudents(headTeacher: unwrappedHeadTeacher)
-                            FromCalendar.PopulateLessons(headTeacher: unwrappedHeadTeacher)
+                            _ = FromCalendar.PopulateLessonDatabaseFromCalendar()
                             self.refreshFlag.toggle()
                         }
                         
                         updateCompanyAddress()
-                        NotificationCenter.default.addObserver(
-                            forName: NSNotification.Name("scrollToTop"),
-                            object: nil,
-                            queue: .main
-                        ) { _ in
-                            scrollOffset = 0.0
-                        }
-                    }
+               }
                     .coordinateSpace(name: "scrollToTop")
                     .background(GeometryReader {
                         Color.clear.preference(
@@ -444,11 +437,16 @@ public struct ContentView: View {
                 // If the days are different, sort based on their numerical order
                 return order1 < order2
             } else {
-                // If the days are the same, sort based on the lesson time
-                
-                // Compare the nominalTime properties
-                return student1.nominalTime < student2.nominalTime
-            }
+                        // If the days are the same, sort based on the lesson time
+                        
+                        // Extract the time components from nominalTime
+                        let calendar = Calendar.current
+                        let time1 = calendar.component(.hour, from: student1.nominalTime) * 60 + calendar.component(.minute, from: student1.nominalTime)
+                        let time2 = calendar.component(.hour, from: student2.nominalTime) * 60 + calendar.component(.minute, from: student2.nominalTime)
+                        
+                        // Compare the time components
+                        return time1 < time2
+                    }
         }
     }
 
