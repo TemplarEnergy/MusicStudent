@@ -76,7 +76,7 @@ struct HeadTeacherInputView: View {
                                 }
                                 HStack {
                                     TextField("Country", text: $headTeacher.country)
-                                        .frame(width: 150)
+                                        .frame(width: 200)
                                     TextField("PostCode", text: $headTeacher.postalCode)
                                         .frame(width: 150)
                                 }

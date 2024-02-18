@@ -11,7 +11,7 @@ import AppKit
 import PDFKit
 import Foundation
 import UniformTypeIdentifiers
- 
+
 func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadTeacher, fileName: String, invoiceName: String,  isInvoiceSheetPresented: Binding<Bool>) {
     
     
@@ -39,21 +39,21 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
     pdfPage.addAnnotation(companyNameAnnotation)
     
     // Add your address on the right using annotation
-    let yourAddressText = "\(headTeacher.street1)\n\(headTeacher.city ), \(headTeacher.county ),\n\(headTeacher.country ),\n\(headTeacher.postalCode )\n\n\(headTeacher.phoneNumber)\n\n\(headTeacher.email )"
-        let yourAddressFont = NSFont.systemFont(ofSize: fontBody)
-        let yourAddressRect = CGRect(x: 50, y: 540, width: 200, height: 150)
-        let yourAddressAnnotation = PDFAnnotation(bounds: yourAddressRect, forType: .freeText, withProperties: nil)
-        yourAddressAnnotation.font = yourAddressFont
-        yourAddressAnnotation.color = NSColor.white
-        yourAddressAnnotation.contents = yourAddressText
-        pdfPage.addAnnotation(yourAddressAnnotation)
-        
-        // Add a link to the email address
+    let yourAddressText = "\(headTeacher.street1)\n\(headTeacher.city ), \(headTeacher.county ),\n\(headTeacher.country ),\n\(headTeacher.postalCode )\n\(headTeacher.phoneNumber)\n\(headTeacher.email )"
+    let yourAddressFont = NSFont.systemFont(ofSize: fontBody)
+    let yourAddressRect = CGRect(x: 50, y: 540, width: 200, height: 150)
+    let yourAddressAnnotation = PDFAnnotation(bounds: yourAddressRect, forType: .freeText, withProperties: nil)
+    yourAddressAnnotation.font = yourAddressFont
+    yourAddressAnnotation.color = NSColor.white
+    yourAddressAnnotation.contents = yourAddressText
+    pdfPage.addAnnotation(yourAddressAnnotation)
+    
+    // Add a link to the email address
     if headTeacher.email != "" {
         let email = headTeacher.email
         let emailLinkRect = CGRect(x: 50, y: 520, width: 200, height: 150)
         let emailLinkAnnotation = PDFAnnotation(bounds: emailLinkRect, forType: .link, withProperties: nil)
-   //     let emailLinkRect = CGRect(x: 50, y: 520, width: 200, height: 150)
+        //     let emailLinkRect = CGRect(x: 50, y: 520, width: 200, height: 150)
         emailLinkAnnotation.color = NSColor.white
         emailLinkAnnotation.url = URL(string: "mailto:\(email)")
         pdfPage.addAnnotation(emailLinkAnnotation)
@@ -81,60 +81,67 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
     }
     
     // Add client's name on the left using annotation
-    let clientNameText = "\(invoiceName)\n\(streetAddress)\n\(student.city),\(student.county)\n\(student.country)\n\(student.postalCode)"
+    let clientNameText = "\(invoiceName)\n\(streetAddress)\n\(student.city),\(student.county)\n\(student.country)\n\(student.postalCode)\n\(student.phoneNumber)\n\(student.email)"
     let clientNameFont = NSFont.systemFont(ofSize: fontBody)
-    let clientNameRect = CGRect(x: 50, y: 500, width: 200, height: 70)
+    let clientNameRect = CGRect(x: 50, y: 480, width: 200, height: 70)
     let clientNameAnnotation = PDFAnnotation(bounds: clientNameRect, forType: .freeText, withProperties: nil)
     clientNameAnnotation.font = clientNameFont
     clientNameAnnotation.color = NSColor.white
     clientNameAnnotation.contents = clientNameText
     pdfPage.addAnnotation(clientNameAnnotation)
     
-    var yPos = 450
+    var yPos = 420
     
-    for (index, lessonLine) in student.lessons.enumerated() {
-       // Add four lines with description, date, and price
-       
-           // Adjust x coordinates for description, date, and price
-           let xIndex = 50
-        let xName = 75
-           let xDate = 250
-           let xDuration = 375
-           let xPrice = 450
-
-           // Sample text for each field
-        let indexText =  "# \(index + 1)"
-        let nameText =  "\(student.instrument)"
-        let dateText = "\(LetterDate(lessonLine.time))"
+    for (lessonLine) in student.lessons {
+        // Add four lines with description, date, and price
+        
+        // Adjust x coordinates for description, date, and price
+        
+        let xName = 50
+        let xDate = 150
+        let xDuration = 375
+        let xPrice = 450
+        var priceText = ""
+        // Sample text for each field
+     
+        
+        
+        let nameText =  "\(student.instrument) Lesson"
+        let dateText = "\(LessonTimeDate(lessonLine.time))"
         let durationText = "\(lessonLine.duration) minutes"
-        let priceText = "£\(lessonLine.price)"
-
-           // Font and text color
-           let font = NSFont.systemFont(ofSize: fontBody)
+        if let price = LessonRateManager.shared.findLessonDurationRate(duration: lessonLine.duration, multiplier: student.multiplier) {
+           priceText = "£\(price)"
+        }
+        else {
+           priceText = "£ 0.00"
+        }
         
+        // Font and text color
+        let font = NSFont.systemFont(ofSize: fontBody)
+        /*
+         // Add description text
+         let indexRect = CGRect(x: xIndex, y: yPos, width: 200, height: 20)
+         let indexAnnotation = PDFAnnotation(bounds: indexRect, forType: .freeText, withProperties: nil)
+         indexAnnotation.font = font
+         indexAnnotation.color = textColor
+         indexAnnotation.contents = indexText
+         pdfPage.addAnnotation(indexAnnotation)
+         */
         // Add description text
-        let indexRect = CGRect(x: xIndex, y: yPos, width: 200, height: 20)
-        let indexAnnotation = PDFAnnotation(bounds: indexRect, forType: .freeText, withProperties: nil)
-        indexAnnotation.font = font
-        indexAnnotation.color = textColor
-        indexAnnotation.contents = indexText
-        pdfPage.addAnnotation(indexAnnotation)
-        
-           // Add description text
-           let nameRect = CGRect(x: xName, y: yPos, width: 200, height: 20)
-           let nameAnnotation = PDFAnnotation(bounds: nameRect, forType: .freeText, withProperties: nil)
+        let nameRect = CGRect(x: xName, y: yPos, width: 125, height: 20)
+        let nameAnnotation = PDFAnnotation(bounds: nameRect, forType: .freeText, withProperties: nil)
         nameAnnotation.font = font
         nameAnnotation.color = textColor
         nameAnnotation.contents = nameText
-           pdfPage.addAnnotation(nameAnnotation)
-
-           // Add date text
-           let dateRect = CGRect(x: xDate, y: yPos, width: 200, height: 20)
-           let dateAnnotation = PDFAnnotation(bounds: dateRect, forType: .freeText, withProperties: nil)
-           dateAnnotation.font = font
-           dateAnnotation.color = textColor
-           dateAnnotation.contents = dateText
-           pdfPage.addAnnotation(dateAnnotation)
+        pdfPage.addAnnotation(nameAnnotation)
+        
+        // Add date text
+        let dateRect = CGRect(x: xDate, y: yPos, width: 200, height: 20)
+        let dateAnnotation = PDFAnnotation(bounds: dateRect, forType: .freeText, withProperties: nil)
+        dateAnnotation.font = font
+        dateAnnotation.color = textColor
+        dateAnnotation.contents = dateText
+        pdfPage.addAnnotation(dateAnnotation)
         
         // Add duration text
         let durationRect = CGRect(x: xDuration, y: yPos, width: 200, height: 20)
@@ -143,80 +150,97 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
         durationAnnotation.color = textColor
         durationAnnotation.contents = durationText
         pdfPage.addAnnotation(durationAnnotation)
-
-
-           // Add price text
-           let priceRect = CGRect(x: xPrice, y: yPos, width: 200, height: 20)
-           let priceAnnotation = PDFAnnotation(bounds: priceRect, forType: .freeText, withProperties: nil)
-           priceAnnotation.font = font
-           priceAnnotation.color = textColor
-           priceAnnotation.contents = priceText
-           pdfPage.addAnnotation(priceAnnotation)
+        
+        
+        // Add price text
+        let priceRect = CGRect(x: xPrice, y: yPos, width: 200, height: 20)
+        let priceAnnotation = PDFAnnotation(bounds: priceRect, forType: .freeText, withProperties: nil)
+        priceAnnotation.font = font
+        priceAnnotation.color = textColor
+        priceAnnotation.contents = priceText
+        pdfPage.addAnnotation(priceAnnotation)
         yPos = yPos -  Int(2.2 * fontBody)
         
-       }
+    }
     
     // Iterate over student's kit lines and add them to the PDF
-   
     
-    
-
-    // Define the y positions for each line
+    if student.kit.count > 0 {
+        let xName = 50
+        let nameText = "Additional Services"
+        //    let dateText = "\(LetterDate(kitLine.date))"
+     
+        // Font and text color
+        let font = NSFont.systemFont(ofSize: fontBody)
         
-    for kitLine in student.kit {
-       // Add four lines with description, date, and price
-       
-           // Adjust x coordinates for description, date, and price
-           let xName = 50
-           let xDate = 250
-           let xPrice = 450
-
-           // Sample text for each field
-        let nameText = "\(kitLine.name)"
-        let dateText = "\(LetterDate(kitLine.date))"
-        let priceText = "£\(kitLine.price)"
-
-           // Font and text color
-           let font = NSFont.systemFont(ofSize: fontBody)
-
-           // Add description text
-           let nameRect = CGRect(x: xName, y: yPos, width: 200, height: 20)
-           let nameAnnotation = PDFAnnotation(bounds: nameRect, forType: .freeText, withProperties: nil)
+        // Add description text
+        let nameRect = CGRect(x: xName, y: yPos, width: 200, height: 20)
+        let nameAnnotation = PDFAnnotation(bounds: nameRect, forType: .freeText, withProperties: nil)
         nameAnnotation.font = font
         nameAnnotation.color = textColor
         nameAnnotation.contents = nameText
-           pdfPage.addAnnotation(nameAnnotation)
-
-           // Add date text
-           let dateRect = CGRect(x: xDate, y: yPos, width: 200, height: 20)
-           let dateAnnotation = PDFAnnotation(bounds: dateRect, forType: .freeText, withProperties: nil)
-           dateAnnotation.font = font
-           dateAnnotation.color = textColor
-           dateAnnotation.contents = dateText
-           pdfPage.addAnnotation(dateAnnotation)
-
-           // Add price text
-           let priceRect = CGRect(x: xPrice, y: yPos, width: 200, height: 20)
-           let priceAnnotation = PDFAnnotation(bounds: priceRect, forType: .freeText, withProperties: nil)
-           priceAnnotation.font = font
-           priceAnnotation.color = textColor
-           priceAnnotation.contents = priceText
-           pdfPage.addAnnotation(priceAnnotation)
+        pdfPage.addAnnotation(nameAnnotation)
+        
+        yPos = yPos -  Int(2.2 * fontBody)
+    }
+    
+    
+    // Define the y positions for each line
+    
+    for kitLine in student.kit {
+        // Add four lines with description, date, and price
+        
+        // Adjust x coordinates for description, date, and price
+        let xName = 50
+        
+        let xPrice = 450
+        
+        // Sample text for each field
+        let nameText = "\(kitLine.name)"
+        //    let dateText = "\(LetterDate(kitLine.date))"
+        let priceText = "£\(kitLine.price)"
+        
+        // Font and text color
+        let font = NSFont.systemFont(ofSize: fontBody)
+        
+        // Add description text
+        let nameRect = CGRect(x: xName, y: yPos, width: 200, height: 20)
+        let nameAnnotation = PDFAnnotation(bounds: nameRect, forType: .freeText, withProperties: nil)
+        nameAnnotation.font = font
+        nameAnnotation.color = textColor
+        nameAnnotation.contents = nameText
+        pdfPage.addAnnotation(nameAnnotation)
+        /*
+         // Add date text
+         let dateRect = CGRect(x: xDate, y: yPos, width: 200, height: 20)
+         let dateAnnotation = PDFAnnotation(bounds: dateRect, forType: .freeText, withProperties: nil)
+         dateAnnotation.font = font
+         dateAnnotation.color = textColor
+         dateAnnotation.contents = dateText
+         pdfPage.addAnnotation(dateAnnotation)
+         */
+        // Add price text
+        let priceRect = CGRect(x: xPrice, y: yPos, width: 200, height: 20)
+        let priceAnnotation = PDFAnnotation(bounds: priceRect, forType: .freeText, withProperties: nil)
+        priceAnnotation.font = font
+        priceAnnotation.color = textColor
+        priceAnnotation.contents = priceText
+        pdfPage.addAnnotation(priceAnnotation)
         yPos = yPos -  Int(2.2 * fontBody)
         
-       }
+    }
     
     let xName = 50
-     
+    
     let xPrice = 450
-
+    
     // Sample text for each field
-  
- let separatorText = "============="
-
+    
+    let separatorText = "============="
+    
     // Font and text color
     let font = NSFont.systemFont(ofSize: fontBody)
-
+    
     // Add description text
     // Add price text
     let separatorRect = CGRect(x: xPrice, y: yPos, width: 200, height: 20)
@@ -225,19 +249,19 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
     separatorAnnotation.color = textColor
     separatorAnnotation.contents = separatorText
     pdfPage.addAnnotation(separatorAnnotation)
-   
     
-     yPos = yPos -  Int(2.2 * fontBody)
+    
+    yPos = yPos -  Int(2.2 * fontBody)
     let nameText = "Total"
     let priceText = String(invoiceTotal)
     
     let nameRect = CGRect(x: xName, y: yPos, width: 200, height: 20)
     let nameAnnotation = PDFAnnotation(bounds: nameRect, forType: .freeText, withProperties: nil)
- nameAnnotation.font = font
- nameAnnotation.color = textColor
- nameAnnotation.contents = nameText
+    nameAnnotation.font = font
+    nameAnnotation.color = textColor
+    nameAnnotation.contents = nameText
     pdfPage.addAnnotation(nameAnnotation)
- 
+    
     // Add price text
     let priceRect = CGRect(x: xPrice, y: yPos, width: 200, height: 20)
     let priceAnnotation = PDFAnnotation(bounds: priceRect, forType: .freeText, withProperties: nil)
@@ -245,12 +269,12 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
     priceAnnotation.color = textColor
     priceAnnotation.contents = ("£\(priceText)")
     pdfPage.addAnnotation(priceAnnotation)
-   
+    
     
     
     
     // Add your banking details at the bottom using annotation
-    let bankingDetailsText = "\nPayment Details: \n\(headTeacher.payableName)\nSort Code: \(headTeacher.sortCode) Account: \(headTeacher.accountNumber)\nPlease make cheques payable to \(headTeacher.payableName)"
+    let bankingDetailsText = "\nPayment Details: \n\(headTeacher.payableName)\nSort Code: \(headTeacher.sortCode) Account: \(headTeacher.accountNumber)\n\nPlease make cheques payable to \(headTeacher.payableName)"
     let bankingDetailsFont = NSFont.systemFont(ofSize: fontCaption)
     let bankingDetailsRect = CGRect(x: 50, y: 50, width: 250, height: 80)
     let bankingDetailsAnnotation = PDFAnnotation(bounds: bankingDetailsRect, forType: .freeText, withProperties: nil)
@@ -273,6 +297,12 @@ private func LetterDate(_ date: Date) -> String {
     return dateFormatter.string(from: date)
 }
 
+private func LessonTimeDate(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "hh:mm   MMM dd"
+    return dateFormatter.string(from: date)
+}
+
 private func InvoiceDate() -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MMMM yyyy"
@@ -283,26 +313,26 @@ func firstDayOfNextMonth() -> String? {
     // Get the current calendar and today's date
     let calendar = Calendar.current
     let today = Date()
-
+    
     // Get the components for the next month
     var nextMonthComponents = DateComponents()
     nextMonthComponents.month = 1
-
+    
     // Calculate the date by adding the components to today's date
     if let nextMonthDate = calendar.date(byAdding: nextMonthComponents, to: today) {
         // Get the components for the first day of the next month
         var firstDayComponents = calendar.dateComponents([.year, .month], from: nextMonthDate)
         firstDayComponents.day = 1
-
+        
         // Construct the date
         if let firstDayNextMonth = calendar.date(from: firstDayComponents) {
             // Format the date as "MMM dd, yyyy"
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMM dd, yyyy"
+            dateFormatter.dateFormat = "MMMM dd, yyyy"
             return dateFormatter.string(from: firstDayNextMonth)
         }
     }
-
+    
     return nil
 }
 

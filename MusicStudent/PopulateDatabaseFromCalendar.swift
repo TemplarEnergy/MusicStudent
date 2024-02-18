@@ -17,10 +17,10 @@ struct FromCalendar {
         var testWord: String = ""
         var nominalLessonDay: String = ""
         var validatedLessonTime: Date = Date()
-        //     var locationComponents: [String]?
+      
         var calendarIdentifier = ""
-        var multipler = 1
-        var intRate = 0
+        var multiplier = 1
+   
         
         // Calculate next month's start and end dates
         let nextMonthDates = calculateNextMonthDates()
@@ -45,10 +45,22 @@ struct FromCalendar {
                         let lessonNumberDay = Calendar.current.component(.weekday, from: event.startDate)
                         let durationInMinutes = Int(event.endDate.timeIntervalSince(event.startDate) / 60)
                         let durationString = "\(durationInMinutes)"
-                        multipler = 1
-                        if let unwrappedRate = Int(Rates.rateTable(duration: durationString)) {
-                            intRate = unwrappedRate * multipler
+                        
+                        let eventLocation = event.location ?? "" // Get the event's location or use an empty string if it's nil
+         
+                        let locationComponents = eventLocation.components(separatedBy: " ")
+
+                        // Take the first three components and join them back into a string
+                        let firstThreeWords = locationComponents.prefix(3).joined(separator: " ")
+            //            print("first three words \(firstThreeWords)")
+
+                        // Compare the first three words with your desired string
+                        if firstThreeWords == "90 Romsey Road" {
+                            multiplier = 3
+                        } else {
+                            multiplier = 1
                         }
+       
                         if let lessonTime = event.startDate {
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:"
@@ -78,8 +90,7 @@ struct FromCalendar {
                                     number: String(count + 1),
                                     day: nominalLessonDay,
                                     time: validatedLessonTime,
-                                    duration: durationString,
-                                    price: String(intRate)
+                                    duration: durationString
                                 )
                                 existingStudent.lessons.append(addedLesson)
                                 DatabaseManager.shared.updateStudent(existingStudent)
@@ -92,8 +103,7 @@ struct FromCalendar {
                                 number: "1",
                                 day: nominalLessonDay,
                                 time: validatedLessonTime,
-                                duration: durationString,
-                                price: String(intRate)
+                                duration: durationString
                             )
                             let student = Student(
                                 studentNumber: "",
@@ -116,7 +126,8 @@ struct FromCalendar {
                                 nominalDuration: durationString,
                                 lessons: [addedLesson],
                                 kit: [],
-                                active: true
+                                active: true,
+                                multiplier: 1
                             )
                             existingStudents.append(student)
                             DatabaseManager.shared.saveStudents(existingStudents)
@@ -271,10 +282,6 @@ struct FromCalendar {
                                     populateLessonsFromEvent(event, headTeacher: headTeacher)
                                                             
                                 }
-
-                                
-                                
-                                //*************************
                             }
                         }
                         
@@ -329,12 +336,7 @@ struct FromCalendar {
             return
         }
         
-        // Calculate the lesson rate based on the duration
-        guard let intRate = calculateLessonRate(durationString) else {
-            print("Error: Unable to calculate lesson rate.")
-            return
-        }
-        
+   
         // Check if the student already exists in the database
         if var existingStudent = DatabaseManager.shared.getStudentByFirstName(studentName), existingStudent.active {
             // Update the existing student's lessons with the new lesson
@@ -344,8 +346,7 @@ struct FromCalendar {
                 number: String(count),
                 day: nominalLessonDay,
                 time: lessonTime,
-                duration: durationString,
-                price: String(intRate)
+                duration: durationString
             )
             existingStudent.lessons.append(addedLesson)
             DatabaseManager.shared.updateStudent(existingStudent)
@@ -356,8 +357,7 @@ struct FromCalendar {
                 number: "1",
                 day: nominalLessonDay,
                 time: lessonTime,
-                duration: durationString,
-                price: String(intRate)
+                duration: durationString
             )
             let student = Student(
                 studentNumber: "",
@@ -380,7 +380,8 @@ struct FromCalendar {
                 nominalDuration: "",
                 lessons: [addedLesson],
                 kit: [],
-                active: true
+                active: true,
+                multiplier: 1
             )
             
             DatabaseManager.shared.updateStudent(student)

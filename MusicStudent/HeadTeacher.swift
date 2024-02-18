@@ -40,7 +40,7 @@ struct HeadTeacher: Codable, Identifiable, Hashable {
 
 
 struct Rates {
-    static func rateTable(duration: String) -> String {
+ /*   static func rateTable(duration: String) -> String {
         
         switch duration{
         case "20":
@@ -61,8 +61,9 @@ struct Rates {
             return "0"
               }
     }
-    
-    static func mulitplier(location: String) -> Int {
+ */
+
+    static func multiplier(location: String) -> Int {
         switch location{
         case "90 Romsey Road":
             return 3;

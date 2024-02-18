@@ -2,11 +2,13 @@ import SwiftUI
 import EventKit
 import Foundation
 
+
 extension Color {
     static let gold = Color(red: 1.0, green: 0.84, blue: 0.0)
     
     static let myYellow = Color(red: 0.5, green: 0.42, blue: 0)
     static let olive = Color(red: 0.5, green: 0.84, blue: 0.5)
+    static let beige = Color(red:0.96, green: 0.96, blue: 0.86)
 }
 
 extension String {
@@ -88,7 +90,8 @@ public struct ContentView: View {
         nominalDuration: "",
         lessons: [],
         kit: [],
-        active: true
+        active: true,
+        multiplier: 1
     )
     
     
@@ -119,7 +122,7 @@ public struct ContentView: View {
     }
     
     //  companyAddress = "\(headTeacher.companyName)\n\(headTeacher.street1)\n\(headTeacher.city), \(headTeacher.county)\n\(headTeacher.country)\n\(headTeacher.postalCode)\n\n\(headTeacher.email) "
-    let instruments = ["Violin", "Viola", "Cello", "Voice", "Piano", "Trio", "Ensemble", "Pari"]
+    let instruments = InstrumentDataManager.shared.loadInstruments()
     //  companyAddress = "\(headTeacher.companyName)\n\(headTeacher.street1)\n\(headTeacher.city), \(headTeacher.county)\n\(headTeacher.country)\n\(headTeacher.postalCode)\n\n\(headTeacher.email)"
     
     public var body: some View {
@@ -166,16 +169,16 @@ public struct ContentView: View {
                             isInvoiceSheetPresented.toggle()
                         }
                         .padding()
-                        .sheet(isPresented: $isInvoiceSheetPresented ) {
-                            // Show the invoice view when the flag is true
-                            
-                            InvoiceView(
-                                isInvoiceSheetPresented: $isInvoiceSheetPresented,
-                                listStudents: $filteredStudents,
-                                businessAddress: $companyAddress,
-                                headTeacher: $headTeacher,
-                                isSheetPresented: $isSheetPresented  
-                            )
+                        .sheet(isPresented: $isInvoiceSheetPresented) {
+                            DraggableWindow(isPresented: $isInvoiceSheetPresented) {
+                                InvoiceView(
+                                    isInvoiceSheetPresented: $isInvoiceSheetPresented,
+                                    listStudents: $filteredStudents,
+                                    businessAddress: $companyAddress,
+                                    headTeacher: $headTeacher,
+                                    isSheetPresented: $isSheetPresented
+                                )
+                            }
                         }
                         
                         
@@ -212,7 +215,7 @@ public struct ContentView: View {
                             }) {
                                 HStack {
                                     Rectangle()
-                                        .fill(Color.teal)
+                                        .fill(Color.beige)
                                         .frame(maxWidth: .infinity, minHeight:20, maxHeight: 20) // Adjust the width to your preference
                                         .overlay(
                                             HStack(alignment: .top) {
@@ -228,6 +231,8 @@ public struct ContentView: View {
                                                 Text("\(student.nominalDay)")
                                                 Text("     ")
                                             }
+                                                .background(backgroundForNominalDay(student.nominalDay))
+                                                .opacity(0.5)
                                                 .padding([.leading, .trailing], 10)
                                         )
                                 }
@@ -258,21 +263,21 @@ public struct ContentView: View {
                                 }
                             }
                             .padding()
-                            .sheet(isPresented: $isSheetPresented, onDismiss: {
-                                loadData()
-                            }) {
-                                EditStudentView(
-                                    isSheetPresented: $isSheetPresented,
-                                    editedStudent: $selectedStudent,
-                                    businessAddress: $companyAddress,
-                                    headTeacher: $headTeacher,
-                                    onDismiss: {
-                                        // Reload data in ContentView after sheet dismissal
-                                        loadData()
-                                        scrollViewProxy.scrollTo(scrollOffset, anchor: .top)
-                                    }
-                                )
-                                .padding()
+                            .sheet(isPresented: $isSheetPresented) {
+                                DraggableWindow(isPresented: $isSheetPresented) {
+                                    EditStudentView(
+                                        isSheetPresented: $isSheetPresented,
+                                        editedStudent: $selectedStudent,
+                                        businessAddress: $companyAddress,
+                                        headTeacher: $headTeacher,
+                                        onDismiss: {
+                                            // Reload data in ContentView after sheet dismissal
+                                            loadData()
+                                            scrollViewProxy.scrollTo(scrollOffset, anchor: .top)
+                                        }
+                                    )
+                                    .padding()
+                                }
                             }
                         }
                         Spacer()
@@ -286,7 +291,6 @@ public struct ContentView: View {
                         if let loadedData = PlistManager.shared.loadHeadTeacherData()  {
                             headTeacher = loadedData
                         }
-                        loadData()
                         if let unwrappedHeadTeacher = headTeacher {
                             FromCalendar.PopulateStudents(headTeacher: unwrappedHeadTeacher)
                             _ = FromCalendar.PopulateLessonDatabaseFromCalendar()
@@ -294,6 +298,7 @@ public struct ContentView: View {
                         }
                         
                         updateCompanyAddress()
+                        loadData()
                }
                     .coordinateSpace(name: "scrollToTop")
                     .background(GeometryReader {
@@ -307,7 +312,7 @@ public struct ContentView: View {
                     }
                     
                 }
-                //                .frame(minHeight: 0, maxHeight: .infinity)
+                .frame(minWidth: 600, maxWidth: .infinity, minHeight: 600, maxHeight: .infinity)
                 .id(refreshFlag)
                 .onPreferenceChange(ViewOffsetKey.self) { offset in
                     scrollOffset = offset
@@ -319,6 +324,23 @@ public struct ContentView: View {
         
         
     }
+    
+    private func backgroundForNominalDay(_ nominalDay: String) -> Color {
+            switch nominalDay.lowercased() {
+            case "monday":
+                return Color.purple
+            case "tuesday":
+                return Color.blue
+            case "wednesday":
+                return Color.green
+            case "thursday":
+                return Color.yellow
+            case "friday":
+                return Color.orange
+            default:
+                return Color.teal
+            }
+        }
     
     private var invoiceButtonAction: () -> Void {
         // Define the action to show the invoice view
@@ -466,5 +488,33 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct DraggableWindow<Content: View>: View {
+    @Binding var isPresented: Bool
+    var content: () -> Content
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                Button(action: {
+                    isPresented = false
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                }
+            }
+            .padding()
+            content()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(radius: 5)
+        .offset(y: isPresented ? 0 : (NSScreen.main?.visibleFrame.height ?? 0))
+        .animation(.default, value: isPresented)
+    }
+}
+
 
 

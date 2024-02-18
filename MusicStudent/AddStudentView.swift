@@ -35,10 +35,11 @@ struct AddStudentView: View {
         nominalTime: Date(),
         nominalDuration: "",
         lessons: [
-            Student.Lesson(number: "2", day: "Wednesday", time: Date(), duration: "60", price: "£30")
+            Student.Lesson(number: "2", day: "Wednesday", time: Date(), duration: "60")
         ],
         kit: [],
-        active: true
+        active: true,
+        multiplier: 1
     )
     
     struct Lesson: Identifiable, Equatable, Codable {
@@ -217,7 +218,8 @@ struct AddStudentView: View {
                             nominalDuration: student.nominalDuration,
                             lessons: student.lessons,
                             kit: student.kit,
-                            active: student.active
+                            active: student.active,
+                            multiplier: 1
                         )
                         
                         // Load existing students from the database
@@ -318,7 +320,8 @@ struct AddStudentView_Previews: PreviewProvider {
             nominalDuration: "",
             lessons: [],
             kit: [],
-            active: true
+            active: true,
+            multiplier: 1
         ))
     }
 }

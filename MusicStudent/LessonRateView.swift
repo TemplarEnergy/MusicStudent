@@ -7,7 +7,7 @@
 import SwiftUI
 import Combine
 
-struct LessonData: Identifiable, Equatable, Codable{
+struct LessonRate: Identifiable, Equatable, Codable{
     var id: String { duration }
     var duration: String
     var fee: String
@@ -17,10 +17,10 @@ struct LessonData: Identifiable, Equatable, Codable{
 
 struct LessonRateView: View {
     @Binding var isShowLessonPrices: Bool
-    @State private var sortedLessonData: [LessonData] = []
+    @State private var sortedLessonData: [LessonRate] = []
     
     private func loadData() {
-        sortedLessonData = LessonDataManager.shared.loadLessonData()
+        sortedLessonData = LessonRateManager.shared.loadLessonRate()
             .sorted { $0.duration < $1.duration }
     }
     
@@ -31,12 +31,12 @@ struct LessonRateView: View {
     
     // Inside LessonRateView
     private func saveData() {
-        LessonDataManager.shared.saveLessonData(sortedLessonData)
+        LessonRateManager.shared.saveLessonRate(sortedLessonData)
     }
     
     private func addLesson() {
         // Add a default entry or customize as needed
-        let newLesson = LessonData(duration: "", fee: "")
+        let newLesson = LessonRate(duration: "", fee: "")
         sortedLessonData.append(newLesson)
     }
     

@@ -29,7 +29,7 @@
 		4BD455512B62C37800F2BA2C /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD455502B62C37800F2BA2C /* Teacher.swift */; };
 		4BFF0FD42B70427E0086DDDF /* TaughtInstrumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */; };
 		4BFF0FD62B7042950086DDDF /* LessonRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD52B7042950086DDDF /* LessonRateView.swift */; };
-		4BFF0FD82B7065A40086DDDF /* LessonDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD72B7065A40086DDDF /* LessonDataManager.swift */; };
+		4BFF0FD82B7065A40086DDDF /* LessonRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD72B7065A40086DDDF /* LessonRateManager.swift */; };
 		4BFF0FDA2B7138160086DDDF /* InstrumentDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD92B7138160086DDDF /* InstrumentDataManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,7 +59,7 @@
 		4BD455502B62C37800F2BA2C /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaughtInstrumentView.swift; sourceTree = "<group>"; };
 		4BFF0FD52B7042950086DDDF /* LessonRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRateView.swift; sourceTree = "<group>"; };
-		4BFF0FD72B7065A40086DDDF /* LessonDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDataManager.swift; sourceTree = "<group>"; };
+		4BFF0FD72B7065A40086DDDF /* LessonRateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRateManager.swift; sourceTree = "<group>"; };
 		4BFF0FD92B7138160086DDDF /* InstrumentDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +95,7 @@
 			children = (
 				4B7F87DC2B53104B0079EB29 /* Info.plist */,
 				4B1D26212B34A57A0014501D /* MusicStudentApp.swift */,
+				4B84CD072B67D3FD00EC2DC5 /* HeadTeacher.swift */,
 				4B1D26432B38AEB80014501D /* AddStudentView.swift */,
 				4B1D26232B34A57A0014501D /* ContentView.swift */,
 				4B1D26452B38AECB0014501D /* EditStudentView.swift */,
@@ -105,20 +106,19 @@
 				4B09A4882B41238900DE6D60 /* StudentRowView.swift */,
 				4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */,
 				4B1D26252B34A57C0014501D /* Assets.xcassets */,
-				4B1D262A2B34A57C0014501D /* Persistence.swift */,
 				4B1D262F2B34A57C0014501D /* MusicStudent.entitlements */,
-				4B1D262C2B34A57C0014501D /* MusicStudent.xcdatamodeld */,
-				4B1D26272B34A57C0014501D /* Preview Content */,
-				4B84CD072B67D3FD00EC2DC5 /* HeadTeacher.swift */,
-				4B1D26372B35E6540014501D /* Student.swift */,
-				4BD455502B62C37800F2BA2C /* Teacher.swift */,
-				4B8DC11C2B743E2D00D4C4BC /* CreateInvoicePDF.swift */,
-				4B2A46702B6B0BD7003EFF55 /* PopulateDatabaseFromCalendar.swift */,
 				4B1D26412B38AA470014501D /* DatabaseManager.swift */,
 				4BFF0FD92B7138160086DDDF /* InstrumentDataManager.swift */,
-				4BFF0FD72B7065A40086DDDF /* LessonDataManager.swift */,
+				4BFF0FD72B7065A40086DDDF /* LessonRateManager.swift */,
 				4B2A46742B6EAC4E003EFF55 /* PlistManager.swift */,
 				4BD4554E2B62BAC800F2BA2C /* PresentationManager.swift */,
+				4B1D262C2B34A57C0014501D /* MusicStudent.xcdatamodeld */,
+				4B1D26272B34A57C0014501D /* Preview Content */,
+				4B8DC11C2B743E2D00D4C4BC /* CreateInvoicePDF.swift */,
+				4B2A46702B6B0BD7003EFF55 /* PopulateDatabaseFromCalendar.swift */,
+				4B1D26372B35E6540014501D /* Student.swift */,
+				4BD455502B62C37800F2BA2C /* Teacher.swift */,
+				4B1D262A2B34A57C0014501D /* Persistence.swift */,
 			);
 			path = MusicStudent;
 			sourceTree = "<group>";
@@ -222,7 +222,7 @@
 				4B1D26442B38AEB80014501D /* AddStudentView.swift in Sources */,
 				4B2A46732B6EAB00003EFF55 /* HeadTeacherInputView.swift in Sources */,
 				4B1D26222B34A57A0014501D /* MusicStudentApp.swift in Sources */,
-				4BFF0FD82B7065A40086DDDF /* LessonDataManager.swift in Sources */,
+				4BFF0FD82B7065A40086DDDF /* LessonRateManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

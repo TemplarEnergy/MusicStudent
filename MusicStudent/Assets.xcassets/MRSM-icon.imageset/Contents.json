@@ -1,16 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "MRSM-icon.jpg",
+      "filename" : "Violin256.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "MRSM-icon 1.jpg",
+      "filename" : "Violin512.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Violin1024.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

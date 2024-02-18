@@ -32,6 +32,7 @@ struct Student: Codable, Identifiable, Hashable {
     var lessons: [Lesson]
     var kit: [KitItem]
     var active: Bool
+    var multiplier: Int
     
     
     struct KitItem: Identifiable, Codable, Hashable {
@@ -48,7 +49,7 @@ struct Student: Codable, Identifiable, Hashable {
         var day: String
         var time: Date
         var duration: String
-        var price: String
+    //    var price: String
        }
 
 }

@@ -31,8 +31,9 @@ struct EditStudentView: View {
     @State private var editedNominalLessonDuration: String
     @State private var editedLessons: [Student.Lesson]
     @State private var editedKit: [Student.KitItem]
-    
     @State private var editedActive: Bool
+    @State private var editedMultiplier: Int
+    
     @State private var timer: Timer?
     @State private var showKitAlert = false
     @State private var showStudentAlert = false
@@ -108,6 +109,7 @@ struct EditStudentView: View {
         _editedLessons = State(initialValue: editedStudent.wrappedValue?.lessons ?? [])
         _editedKit = State(initialValue: editedStudent.wrappedValue?.kit ?? [])
         _editedActive = State(initialValue: editedStudent.wrappedValue?.active ?? true)
+        _editedMultiplier = State(initialValue: editedStudent.wrappedValue?.multiplier ?? 1)
         
         self.onDeleteKitItem = onDeleteKitItem
         self.onDeleteLesson = onDeleteLesson
@@ -171,7 +173,7 @@ struct EditStudentView: View {
                             Text("Permanent Student Number:")
                             TextField("Enter PSN", text:  $editedStudentNumber)
                                 .modifier(CustomTextFieldStyle(backgroundColor: Color.red, pad: 5))
-                                .foregroundColor(Color.white)
+                                .foregroundColor(Color.black)
                                 .frame(width: 60)
                             
                          
@@ -180,10 +182,10 @@ struct EditStudentView: View {
                             Text("First Name:")
                             TextField("Enter First name", text: $editedFirstName)
                                 .frame(width: 200)
-                                .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                             Text("Last Name:")
                             TextField("Enter Last name", text: $editedLastName)
-                                .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                                 .frame(width: 200)
                         }
                         .padding()
@@ -191,11 +193,11 @@ struct EditStudentView: View {
                         HStack {
                             Text("Parents Name:")
                             TextField("Enter Parents name", text: $editedParentName)
-                                .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                                 .frame(width: 200)
                             Text("Parents Last Name:")
                             TextField("Enter Parents Last name", text: $editedParentsLastName)
-                                .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                                 .frame(width: 200)
                         }
                         HStack {
@@ -206,7 +208,7 @@ struct EditStudentView: View {
                                     
                                 }
                             }
-                                .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                                 .frame(width: 200)
                         }
                         .padding()
@@ -219,7 +221,7 @@ struct EditStudentView: View {
                                     
                                 }
                             }
-                            .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                            .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                             .frame(width: 100)
                             .pickerStyle(MenuPickerStyle())
                             .padding()
@@ -236,7 +238,7 @@ struct EditStudentView: View {
                                 .frame(width: 150)
                             Text("Duration of Lesson:")
                             TextField("Enter Duration of Lesson", text: $editedNominalLessonDuration)
-                                .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                                 .frame(width: 100)
                         }
                         .padding()
@@ -245,36 +247,36 @@ struct EditStudentView: View {
                             VStack {
                                 Text("Address:")
                                 TextField("Enter Street", text: $editedStreet1)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 0))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 0))
                                     .frame(width: 200)
                                 TextField("Enter Alt Street", text: $editedStreet2)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 0))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 0))
                                     .frame(width: 200)
                                 TextField("Enter City", text: $editedCity)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 0))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 0))
                                     .frame(width: 200)
                                 TextField("County", text: $editedCounty)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 0))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 0))
                                     .frame(width: 200)
                                 TextField("Country", text: $editedCountry)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 0))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 0))
                                     .frame(width: 200)
                                 TextField("Post Code", text: $editedPostalCode)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 0))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 0))
                                     .frame(width: 200)
                             }
                             VStack{
                                 Text("Email:")
                                 TextField("Enter Email", text: $editedEmail)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                                     .frame(width: 200)
                                 Text("Phone Number:")
                                 TextField("Enter Phone Number", text: $editedPhoneNumber)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                                     .frame(width: 200)
                                 Text("Alt Phone Number:")
                                 TextField("Enter Alt Phone Number", text: $editedPhoneNumber2)
-                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
+                                    .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                                     .frame(width: 200)
                                     .foregroundColor(Color.black)
                             }
@@ -284,9 +286,8 @@ struct EditStudentView: View {
                             ForEach(editedLessons.indices, id: \.self) { index in
                                 VStack {
                                     HStack(alignment: .top) {
-                                        Spacer()
                                         VStack(alignment: .leading) {
-                                            Text(" Lesson # \(String(index + 1))")
+                                            Text("Lesson")
                                                 .frame(width: 80, alignment: .leading)
                                         }
                                         .padding(.leading, 10)
@@ -316,7 +317,7 @@ struct EditStudentView: View {
                                             Text(" ")
                                         }
                                         VStack(alignment: .leading) {
-                                            Text( "£\(editedLessons[index].price)")
+                                            Text(findRate(duration: editedLessons[index].duration))
                                                 .foregroundColor(.secondary)
                                                 .frame(width: 40, alignment: .leading)
                                         }
@@ -359,20 +360,17 @@ struct EditStudentView: View {
                     HStack {
                         
                         TextField("Enter Extra Item", text: $kitItemName)
-                            .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
-                            .foregroundColor(Color.black)
+                            .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                             .frame(width: 250)
                         TextField("Enter Item's Price", text: $kitItemPrice)
-                            .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
-                            .foregroundColor(Color.black)
+                            .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                             .frame(width: 150)
                         Picker("Select", selection: $kitItemStatus) {
                             ForEach(status, id: \.self) {
                                 Text($0)
                             }
                         }
-                        .modifier(CustomTextFieldStyle(backgroundColor: Color.blue, pad: 5))
-                        .foregroundColor(Color.black)
+                        .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                         .frame(width: 150)
                         
                         Button("Add Item") {
@@ -575,7 +573,7 @@ struct EditStudentView: View {
                 
               //  .padding(30)
             }
-            .frame(width: 600, height: 1000 )
+            .frame(minWidth: 600, maxWidth: .infinity, minHeight: 1000, maxHeight: .infinity )
             .padding(30)
             
         }
@@ -622,7 +620,7 @@ func filterKitItemsForCurrentAndPrecedingMonths(_ kitItems: [Student.KitItem]) -
     let currentDate = Date()
     let calendar = Calendar.current
     
-    print("I am in the filter kit current date \(currentDate)")
+  //  print("I am in the filter kit current date \(currentDate)")
     // Get the date components for the current month
     let currentMonthComponents = calendar.dateComponents([.year, .month], from: currentDate)
     
@@ -644,7 +642,19 @@ func filterKitItemsForCurrentAndPrecedingMonths(_ kitItems: [Student.KitItem]) -
     
     return filteredKitItems
 }
-
+    func findRate(duration: String) -> String {
+        var priceText = ""
+        if let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, multiplier: editedMultiplier) {
+            
+                priceText = "£\(price)"
+            
+        }
+        else {
+             priceText = "£0.00"
+        }
+        return priceText
+    }
+    
 func formattedDate(_ date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
@@ -804,7 +814,7 @@ struct CustomTextFieldStyle: ViewModifier {
         content
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .background(backgroundColor.opacity(0.75))
-            .foregroundColor(.white)
+            .foregroundColor(.black)
             .cornerRadius(8)
         
     }
@@ -833,7 +843,8 @@ struct EditStudentView_Previews: PreviewProvider {
         nominalDuration: "",
         lessons: [],
         kit: [],
-        active: true
+        active: true,
+        multiplier: 1
     )
     @State private static var headTeacher: HeadTeacher? = HeadTeacher(
         companyName: "",
