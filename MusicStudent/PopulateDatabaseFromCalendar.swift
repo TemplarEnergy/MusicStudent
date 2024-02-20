@@ -51,7 +51,7 @@ struct FromCalendar {
                         let locationComponents = eventLocation.components(separatedBy: " ")
 
                         // Take the first three components and join them back into a string
-                        let firstThreeWords = locationComponents.prefix(3).joined(separator: " ")
+                        var firstThreeWords = locationComponents.prefix(3).joined(separator: " ")
             //            print("first three words \(firstThreeWords)")
 
                         // Compare the first three words with your desired string
@@ -60,6 +60,7 @@ struct FromCalendar {
                         } else {
                             multiplier = 1
                         }
+                        firstThreeWords = ""
        
                         if let lessonTime = event.startDate {
                             let dateFormatter = DateFormatter()
@@ -127,7 +128,7 @@ struct FromCalendar {
                                 lessons: [addedLesson],
                                 kit: [],
                                 active: true,
-                                multiplier: 1
+                                multiplier: multiplier
                             )
                             existingStudents.append(student)
                             DatabaseManager.shared.saveStudents(existingStudents)

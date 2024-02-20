@@ -6,31 +6,6 @@ import Foundation
 import UniformTypeIdentifiers
 
 
-struct InvoiceView: View {
-    @Binding var isInvoiceSheetPresented: Bool
-    @Binding var listStudents: [Student]
-    @Binding var businessAddress: String
-    @Binding var headTeacher: HeadTeacher?
-    @Binding var isSheetPresented: Bool
-    
-    //   @State private var isInvoiceSheetPresented: Bool = false
-    @StateObject var viewModel = InvoiceViewModel()
-    
-    @State private var pdfData: Data?
-    @State private var currentIndex: Int = 0
-    //   @State private var invoiceTotal = 0
-    @State private var invoiceName = ""
-    
-    @State private var invoiceTotal: Double = 0
-    var invoiceDate: Date = Date()
-    //  var lessonFee = "£30.00"
-    var body: some View {
-        if let student = listStudents.indices.contains(currentIndex) ? listStudents[currentIndex] : nil {
-            InvoiceContentView(student: student, headTeacher: headTeacher,  viewModel: viewModel, currentIndex: $currentIndex, isInvoiceSheetPresented: $isInvoiceSheetPresented, isSheetPresented: $isSheetPresented, listStudents: $listStudents)
-        }
-    }
-}
-
 class InvoiceViewModel: ObservableObject {
     func findInvoiceName(for student: Student) -> String {
         var tempStudent = student
@@ -42,7 +17,7 @@ class InvoiceViewModel: ObservableObject {
         return "\(tempStudent.parentsName) \(tempStudent.parentsLastName)"
     }
     
-    func findTotalPrice(for student: Student) -> Double {
+    func findTotalPrice(for student: Student) -> String {
         var totalPrice = 0.0
         
         // Loop over kit items
@@ -59,33 +34,35 @@ class InvoiceViewModel: ObservableObject {
                 totalPrice += price
             }
         }
-        
-        return totalPrice
+        let formattedTotalPrice  = String(format: "%.2f", totalPrice)
+        return formattedTotalPrice
     }
     
 }
 
 
-func findRate(duration: String, multiplier: Int) -> String {
-    var priceText = ""
-    if let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, multiplier: multiplier) {
-        priceText = "£\(price))"
-    }
-    else {
-        priceText = "£ 0.00"
-    }
-    return priceText
-}
 
-struct InvoiceView_Previews: PreviewProvider {
-    static var previews: some View {
-        InvoiceView(
-            isInvoiceSheetPresented: .constant(false),
-            listStudents: .constant([]),
-            businessAddress: .constant("Preview Business Address"),
-            headTeacher: .constant(nil),
-            isSheetPresented: .constant(false) // Provide an appropriate default value for headTeacher
-        )
+struct InvoiceView: View {
+    @Binding var isInvoiceSheetPresented: Bool
+    @Binding var listStudents: [Student]
+    @Binding var businessAddress: String
+    @Binding var headTeacher: HeadTeacher?
+    @Binding var isSheetPresented: Bool
+    
+    //   @State private var isInvoiceSheetPresented: Bool = false
+    @StateObject var viewModel = InvoiceViewModel()
+    
+    @State private var pdfData: Data?
+    @State private var currentIndex: Int = 0
+    @State private var invoiceName = ""
+    @State private var invoiceTotal: Double = 0
+    
+    var invoiceDate: Date = Date()
+    //  var lessonFee = "£30.00"
+    var body: some View {
+        if let student = listStudents.indices.contains(currentIndex) ? listStudents[currentIndex] : nil {
+            InvoiceContentView(student: student, headTeacher: headTeacher,  viewModel: viewModel, currentIndex: $currentIndex, isInvoiceSheetPresented: $isInvoiceSheetPresented, isSheetPresented: $isSheetPresented, listStudents: $listStudents)
+        }
     }
 }
 
@@ -117,6 +94,8 @@ struct InvoiceContentView: View {
                         InvoiceDetailView(studentPDF: student)
                         BillinView(studentPDF: student, student: unwrappedStudent,  viewModel: viewModel)
                         LessonView(student: unwrappedStudent, viewModel: viewModel, listStudents: $listStudents)
+                        KitView(student: unwrappedStudent, viewModel: viewModel, listStudents: $listStudents)
+                        TotalView(student: unwrappedStudent, viewModel: viewModel)
                         Spacer()
                     }
                     PaymentDetailsView(headTeacher: headTeacher)
@@ -139,7 +118,6 @@ struct InvoiceContentView: View {
             }
         }
     }
-    
     
     private struct ButtonsView: View {
         var generatePDF: () -> Void
@@ -198,8 +176,6 @@ struct InvoiceContentView: View {
             }
         }
     }
-
-   
     
     func firstDayOfNextMonth() -> String? {
         // Get the current calendar and today's date
@@ -241,13 +217,7 @@ struct InvoiceContentView: View {
             studentPDF?.parentsLastName = student.parentsLastName
         }
     }
- /*
-    private func letterDate(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM dd, yyyy"
-        return dateFormatter.string(from: date)
-    }
-*/
+
     private func generatePDF() {
         guard let student = studentPDF else {
             // Handle the case where studentPDF is nil
@@ -264,7 +234,8 @@ struct InvoiceContentView: View {
         if let unwrappedHeadTeacher = headTeacher {
             var invoiceTotal: Double = 0
             var invoiceName: String = ""
-            invoiceTotal = viewModel.findTotalPrice(for: student)
+            let formattedTotalPrice = viewModel.findTotalPrice(for: student)
+            invoiceTotal = Double(formattedTotalPrice) ?? 0.0
             invoiceName = viewModel.findInvoiceName(for: student)
             
             updateStudentPDF(student) // Call updateStudentPDF here
@@ -278,26 +249,58 @@ struct InvoiceContentView: View {
     }
 }
 
-
-
-private func LessonTimeDate(_ date: Date) -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "HH:mm  MMM dd"
-    return dateFormatter.string(from: date)
+private struct HeaderView: View {
+    var headTeacher: HeadTeacher?
+    var student: Student
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(headTeacher?.companyName ?? "")
+                    .font(.title)
+                    .padding(.bottom)
+                
+                VStack(alignment: .leading) {
+                    Text("\(headTeacher?.street1 ?? "")")
+                    Text("\(headTeacher?.city ?? ""), \(headTeacher?.county ?? "")")
+                    Text("\(headTeacher?.country ?? "")")
+                    Text("\(headTeacher?.postalCode ?? "")")
+                    Text("\(headTeacher?.phoneNumber ?? "")")
+                    Text("\(headTeacher?.email ?? "")")
+                }
+                .padding(.bottom)
+            }
+            Spacer()
+        }
+        
+    }
 }
 
-private func InvoiceIdDate() -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyyMM"
-    return dateFormatter.string(from: Date())
+private struct InvoiceDetailView: View {
+    var studentPDF: Student
+    var body: some View {
+        VStack{
+            
+            HStack{
+                Spacer()
+                VStack(alignment: .leading) {
+                    if let invoiceID = studentPDF.studentNumber, let invoiceIdDate = InvoiceIdDate() {
+                        Text("Invoice ID: \(invoiceID)\(invoiceIdDate)")
+                    }
+                    if let letterDate = LetterDate() {
+                        Text("Invoice Date: \(letterDate)")
+                    }
+                    if let dueDate = firstDayOfNextMonth() {
+                        Text("Due Date: \(dueDate)")
+                    }
+                    if let accountName = studentPDF.firstName {
+                        Text("Account: \(accountName)")
+                    }
+                }
+            }
+        }
+    }
 }
-
-private func LetterDate() -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MMMM dd, yyyy"
-    return dateFormatter.string(from: Date())
-}
-
 
 private struct BillinView: View {
     var studentPDF: Student
@@ -339,39 +342,13 @@ private struct BillinView: View {
         
 }
 
-private struct InvoiceDetailView: View {
-    var studentPDF: Student
-    var body: some View {
-        VStack{
-            
-            HStack{
-                Spacer()
-                VStack(alignment: .leading) {
-                    if let invoiceID = studentPDF.studentNumber, let invoiceIdDate = InvoiceIdDate() {
-                        Text("Invoice ID: \(invoiceID)\(invoiceIdDate)")
-                    }
-                    if let letterDate = LetterDate() {
-                        Text("Invoice Date: \(letterDate)")
-                    }
-                    if let dueDate = firstDayOfNextMonth() {
-                        Text("Due Date: \(dueDate)")
-                    }
-                    if let accountName = studentPDF.firstName {
-                        Text("Account: \(accountName)")
-                    }
-                }
-            }
-        }
-    }
-}
-
 private struct LessonView: View {
     var student: Student
     var viewModel: InvoiceViewModel
     @Binding var listStudents: [Student]
     
     var body: some View {
-        VStack {            
+        VStack {
             if let lessons = student.lessons {
                 ForEach(lessons, id: \.self) { lesson in
                     HStack(alignment: .top) {
@@ -379,16 +356,18 @@ private struct LessonView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
                         Text("\(lesson.day)")
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
                         
                         Text("\(LessonTimeDate(lesson.time))")
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
                         Text("\(lesson.duration) minutes")
                             .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer()
                         
-                        Text(findRate(duration: lesson.duration, multiplier: student.multiplier))
+                        Text("£\(findRate(duration: lesson.duration, multiplier: student.multiplier))")
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            
                     }
                 }
             }
@@ -396,30 +375,83 @@ private struct LessonView: View {
     }
 }
 
-private struct HeaderView: View {
-    var headTeacher: HeadTeacher?
+private struct KitView: View {
     var student: Student
+    var viewModel: InvoiceViewModel
+    @Binding var listStudents: [Student]
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(headTeacher?.companyName ?? "")
-                    .font(.title)
-                    .padding(.bottom)
-                
-                VStack(alignment: .leading) {
-                    Text("\(headTeacher?.street1 ?? "")")
-                    Text("\(headTeacher?.city ?? ""), \(headTeacher?.county ?? "")")
-                    Text("\(headTeacher?.country ?? "")")
-                    Text("\(headTeacher?.postalCode ?? "")")
-                    Text("\(headTeacher?.phoneNumber ?? "")")
-                    Text("\(headTeacher?.email ?? "")")
+        VStack {
+            if let kit = student.kit {
+                ForEach(kit, id: \.self) { kitItem in
+                    HStack(alignment: .top) {
+                        Text("\(kitItem.name) ")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text(" ")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text(" ")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text(" ")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text("\(kitItem.price)")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                    }
                 }
-                .padding(.bottom)
             }
-            Spacer()
         }
-        
+    }
+}
+
+private struct TotalView: View {
+    var student: Student
+    var viewModel: InvoiceViewModel
+    
+    var body: some View {
+        VStack {
+            
+                HStack(alignment: .top) {
+                    Text(" ")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(" ")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(" ")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(" ")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(" ")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            HStack(alignment: .top) {
+                Text(" ")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(" ")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(" ")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(" ")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("==========")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            HStack(alignment: .top) {
+                Text("Total")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(" ")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(" ")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(" ")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("£\(viewModel.findTotalPrice(for: student))")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            
+        }
     }
 }
 
@@ -446,4 +478,47 @@ private struct PaymentDetailsView: View {
     }
 }
 
+
+
+private func LessonTimeDate(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = " MMM dd @ HH:mm"
+    return dateFormatter.string(from: date)
+}
+
+private func InvoiceIdDate() -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyyMM"
+    return dateFormatter.string(from: Date())
+}
+
+private func LetterDate() -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MMMM dd, yyyy"
+    return dateFormatter.string(from: Date())
+}
+
+func findRate(duration: String, multiplier: Int) -> String {
+    var priceText = ""
+    if let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, multiplier: multiplier) {
+        priceText = "\(price)"
+    }
+    else {
+        priceText = "0.00"
+    }
+    return priceText
+}
+
+
+struct InvoiceView_Previews: PreviewProvider {
+    static var previews: some View {
+        InvoiceView(
+            isInvoiceSheetPresented: .constant(false),
+            listStudents: .constant([]),
+            businessAddress: .constant("Preview Business Address"),
+            headTeacher: .constant(nil),
+            isSheetPresented: .constant(false) // Provide an appropriate default value for headTeacher
+        )
+    }
+}
 

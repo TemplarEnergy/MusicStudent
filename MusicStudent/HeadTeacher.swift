@@ -27,43 +27,16 @@ struct HeadTeacher: Codable, Identifiable, Hashable {
     var    rate: String
     var payableName: String
     var accountNumber: String
-    var sortCode: String
-    
+    var sortCode: String    
     
     static let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     static let extraItemStatus = ["Suggested", "Ordered", "Delivered", "Paid", "Other"]
-
-    
-    
     
 }
 
 
 struct Rates {
- /*   static func rateTable(duration: String) -> String {
-        
-        switch duration{
-        case "20":
-            return "12";
-        case "15":
-            return "15";
-        case "30":
-            return "20";
-        case "45":
-            return "25";
-        case "60":
-            return "30";
-        case "90":
-            return "50"
-        case "240":
-            return "122"
-        default:
-            return "0"
-              }
-    }
- */
-
-    static func multiplier(location: String) -> Int {
+     static func multiplier(location: String) -> Int {
         switch location{
         case "90 Romsey Road":
             return 3;
@@ -72,12 +45,3 @@ struct Rates {
         }
     }
 }
-/*
-struct FindCalendarID {
-    static func CalendarID() -> String {
-        let calendarName = "MapleOaks Teaching"
-        return calendarName
-    }
-}
-
-*/

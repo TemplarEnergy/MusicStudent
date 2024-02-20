@@ -222,7 +222,7 @@ struct EditStudentView: View {
                                 }
                             }
                             .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
-                            .frame(width: 100)
+                            .frame(width: 150)
                             .pickerStyle(MenuPickerStyle())
                             .padding()
                             DatePicker("", selection: $editedNominalLessonTime, displayedComponents: .hourAndMinute)
@@ -317,7 +317,7 @@ struct EditStudentView: View {
                                             Text(" ")
                                         }
                                         VStack(alignment: .leading) {
-                                            Text(findRate(duration: editedLessons[index].duration))
+                                            Text(findRate(duration: editedLessons[index].duration, multiplier: editedMultiplier))
                                                 .foregroundColor(.secondary)
                                                 .frame(width: 40, alignment: .leading)
                                         }
@@ -361,17 +361,11 @@ struct EditStudentView: View {
                         
                         TextField("Enter Extra Item", text: $kitItemName)
                             .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
-                            .frame(width: 250)
+                            .frame(width: 400)
                         TextField("Enter Item's Price", text: $kitItemPrice)
                             .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
                             .frame(width: 150)
-                        Picker("Select", selection: $kitItemStatus) {
-                            ForEach(status, id: \.self) {
-                                Text($0)
-                            }
-                        }
-                        .modifier(CustomTextFieldStyle(backgroundColor: Color.olive, pad: 5))
-                        .frame(width: 150)
+                       
                         
                         Button("Add Item") {
                             // Add the new kit item
@@ -412,17 +406,6 @@ struct EditStudentView: View {
                                         .frame(width: 80, alignment: .trailing)
                                         .font(.caption)
                                 }
-                                Picker("Select", selection: $editedKit[index].status) {
-                                    ForEach(status, id: \.self) {
-                                        Text($0)
-                                            .font(.caption)
-                                            .frame(width: 80, alignment: .leading)
-                                    }
-                                    .font(.caption)
-                                }
-                                .frame(width: 150, alignment: .leading)
-                                .font(.caption)
-                                
                                
                                 
                                 // Delete button
@@ -642,11 +625,17 @@ func filterKitItemsForCurrentAndPrecedingMonths(_ kitItems: [Student.KitItem]) -
     
     return filteredKitItems
 }
-    func findRate(duration: String) -> String {
+    func findRate(duration: String, multiplier: Int) -> String {
         var priceText = ""
         if let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, multiplier: editedMultiplier) {
-            
+            if var proRatedPrice = Double(price) {
+             //   proRatedPrice *= Double(multiplier)
+                priceText = String(format: "%.2f", proRatedPrice)
+            }
+            else {
+                
                 priceText = "£\(price)"
+            }
             
         }
         else {
