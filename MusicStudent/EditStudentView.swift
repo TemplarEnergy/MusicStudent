@@ -628,7 +628,7 @@ func filterKitItemsForCurrentAndPrecedingMonths(_ kitItems: [Student.KitItem]) -
     func findRate(duration: String, multiplier: Int) -> String {
         var priceText = ""
         if let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, multiplier: editedMultiplier) {
-            if var proRatedPrice = Double(price) {
+            if let proRatedPrice = Double(price) {
              //   proRatedPrice *= Double(multiplier)
                 priceText = String(format: "%.2f", proRatedPrice)
             }
