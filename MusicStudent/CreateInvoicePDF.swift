@@ -109,12 +109,9 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
         let nameText =  "\(student.instrument) Lesson"
         let dateText = "\(LessonTimeDate(lessonLine.time))"
         let durationText = "\(lessonLine.duration) minutes"
-        if let price = LessonRateManager.shared.findLessonDurationRate(duration: lessonLine.duration, multiplier: student.multiplier) {
-           priceText = "£\(price)"
-        }
-        else {
-           priceText = "£ 0.00"
-        }
+        let price = LessonRateManager.shared.findLessonDurationRate(duration: lessonLine.duration, firstName: student.firstName, lastName: student.lastName)
+        priceText = "£\(String(format: "%.2f", price))"
+        
         
         // Font and text color
         let font = NSFont.systemFont(ofSize: fontBody)
@@ -253,7 +250,7 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
     
     yPos = yPos -  Int(2.2 * fontBody)
     let nameText = "Total"
-    let priceText = String(invoiceTotal)
+    let priceText = String(format: "%.2f", invoiceTotal)
     
     let nameRect = CGRect(x: xName, y: yPos, width: 200, height: 20)
     let nameAnnotation = PDFAnnotation(bounds: nameRect, forType: .freeText, withProperties: nil)
@@ -274,7 +271,7 @@ func createInvoicePDF(student: Student, invoiceTotal: Double, headTeacher: HeadT
     
     
     // Add your banking details at the bottom using annotation
-    let bankingDetailsText = "\nPayment Details: \n\(headTeacher.payableName)\nSort Code: \(headTeacher.sortCode) Account: \(headTeacher.accountNumber)\n\nPlease make cheques payable to \(headTeacher.payableName)"
+    let bankingDetailsText = "\nPayment Details: \n\(headTeacher.payableName) \nSort Code: \(headTeacher.sortCode) Account: \(headTeacher.accountNumber) \n \nPlease make cheques payable to \(headTeacher.payableName)"
     let bankingDetailsFont = NSFont.systemFont(ofSize: fontCaption)
     let bankingDetailsRect = CGRect(x: 50, y: 50, width: 250, height: 80)
     let bankingDetailsAnnotation = PDFAnnotation(bounds: bankingDetailsRect, forType: .freeText, withProperties: nil)

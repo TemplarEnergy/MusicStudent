@@ -58,6 +58,16 @@ class DatabaseManager {
             }
         }
     
+    func updateStudentMultiplier(for street: String, with multiplier: Double) {
+        var students = loadStudents()
+        if let index = students.firstIndex(where: { $0.street1 == street }) {
+            students[index].multiplier = multiplier
+            updateStudent(students[index])
+        } else {
+            print("Student not found for update.")
+        }
+    }
+    
     func addCalendarStudent(_ updatedStudent: Student) {
         do {
             let data = try JSONEncoder().encode(updatedStudent)

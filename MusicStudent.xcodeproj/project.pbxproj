@@ -27,6 +27,8 @@
 		4BD4554D2B62B8C700F2BA2C /* InvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD4554C2B62B8C700F2BA2C /* InvoiceView.swift */; };
 		4BD4554F2B62BAC800F2BA2C /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD4554E2B62BAC800F2BA2C /* PresentationManager.swift */; };
 		4BD455512B62C37800F2BA2C /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD455502B62C37800F2BA2C /* Teacher.swift */; };
+		4BF2C7332B865A8900F9E4C6 /* AddressMultiplierRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2C7322B865A8900F9E4C6 /* AddressMultiplierRateManager.swift */; };
+		4BF2C7352B865D1000F9E4C6 /* AddressMultiplierRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2C7342B865D1000F9E4C6 /* AddressMultiplierRateView.swift */; };
 		4BFF0FD42B70427E0086DDDF /* TaughtInstrumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */; };
 		4BFF0FD62B7042950086DDDF /* LessonRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD52B7042950086DDDF /* LessonRateView.swift */; };
 		4BFF0FD82B7065A40086DDDF /* LessonRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF0FD72B7065A40086DDDF /* LessonRateManager.swift */; };
@@ -57,6 +59,8 @@
 		4BD4554C2B62B8C700F2BA2C /* InvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceView.swift; sourceTree = "<group>"; };
 		4BD4554E2B62BAC800F2BA2C /* PresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		4BD455502B62C37800F2BA2C /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
+		4BF2C7322B865A8900F9E4C6 /* AddressMultiplierRateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressMultiplierRateManager.swift; sourceTree = "<group>"; };
+		4BF2C7342B865D1000F9E4C6 /* AddressMultiplierRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressMultiplierRateView.swift; sourceTree = "<group>"; };
 		4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaughtInstrumentView.swift; sourceTree = "<group>"; };
 		4BFF0FD52B7042950086DDDF /* LessonRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRateView.swift; sourceTree = "<group>"; };
 		4BFF0FD72B7065A40086DDDF /* LessonRateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRateManager.swift; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 				4B1D26212B34A57A0014501D /* MusicStudentApp.swift */,
 				4B84CD072B67D3FD00EC2DC5 /* HeadTeacher.swift */,
 				4B1D26432B38AEB80014501D /* AddStudentView.swift */,
+				4BF2C7342B865D1000F9E4C6 /* AddressMultiplierRateView.swift */,
 				4B1D26232B34A57A0014501D /* ContentView.swift */,
 				4B1D26452B38AECB0014501D /* EditStudentView.swift */,
 				4B1D263F2B388FCF0014501D /* FilterOptionsView.swift */,
@@ -107,6 +112,7 @@
 				4BFF0FD32B70427E0086DDDF /* TaughtInstrumentView.swift */,
 				4B1D26252B34A57C0014501D /* Assets.xcassets */,
 				4B1D262F2B34A57C0014501D /* MusicStudent.entitlements */,
+				4BF2C7322B865A8900F9E4C6 /* AddressMultiplierRateManager.swift */,
 				4B1D26412B38AA470014501D /* DatabaseManager.swift */,
 				4BFF0FD92B7138160086DDDF /* InstrumentDataManager.swift */,
 				4BFF0FD72B7065A40086DDDF /* LessonRateManager.swift */,
@@ -215,10 +221,12 @@
 				4B1D26242B34A57A0014501D /* ContentView.swift in Sources */,
 				4B1D26462B38AECB0014501D /* EditStudentView.swift in Sources */,
 				4B1D26402B388FCF0014501D /* FilterOptionsView.swift in Sources */,
+				4BF2C7352B865D1000F9E4C6 /* AddressMultiplierRateView.swift in Sources */,
 				4B2A46712B6B0BD7003EFF55 /* PopulateDatabaseFromCalendar.swift in Sources */,
 				4BD4554D2B62B8C700F2BA2C /* InvoiceView.swift in Sources */,
 				4BD4554F2B62BAC800F2BA2C /* PresentationManager.swift in Sources */,
 				4BFF0FD62B7042950086DDDF /* LessonRateView.swift in Sources */,
+				4BF2C7332B865A8900F9E4C6 /* AddressMultiplierRateManager.swift in Sources */,
 				4B1D26442B38AEB80014501D /* AddStudentView.swift in Sources */,
 				4B2A46732B6EAB00003EFF55 /* HeadTeacherInputView.swift in Sources */,
 				4B1D26222B34A57A0014501D /* MusicStudentApp.swift in Sources */,

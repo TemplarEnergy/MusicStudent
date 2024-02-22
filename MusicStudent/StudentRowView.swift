@@ -56,7 +56,7 @@ struct StudentRowView_Previews: PreviewProvider {
             lessons: [],
             kit: [],
             active: true,
-            multiplier: 1
+            multiplier: 1.0
         ))
     }
 }

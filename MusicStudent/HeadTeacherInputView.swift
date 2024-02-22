@@ -10,6 +10,7 @@ struct HeadTeacherInputView: View {
     @Binding var showHeadTeacherInput: Bool
     @Binding var headTeacher: HeadTeacher
     @State private var isShowTaughtInstruments = false
+    @State private var isShowAddressMultiplier = false
     @State private var isShowLessonPrices = false
     @State private var lessonRates = false
     
@@ -22,7 +23,7 @@ struct HeadTeacherInputView: View {
                     Button("Change Rates") {
                         isShowLessonPrices.toggle()
                     }
-                    .padding(20)
+                    .padding(10)
                     .background(Color.red)
                     .foregroundColor(.white)
                     .sheet(isPresented: $isShowLessonPrices ) {
@@ -32,12 +33,29 @@ struct HeadTeacherInputView: View {
                             isShowLessonPrices: $isShowLessonPrices
                         )
                     }
+                    Spacer()
+                    Button("Change Off Site Rates") {
+                        isShowAddressMultiplier.toggle()
+                    }
+                    .padding(10)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .sheet(
+                        isPresented: $isShowAddressMultiplier) {
+                        // Show the invoice view when the flag is true
+                        
+                        AddressMultiplierRateView(
+                            isShowAddressMultiplier: $isShowAddressMultiplier,
+                            headTeacher: $headTeacher
+                            
+                        )
+                    }
                     .cornerRadius(8)
                     Spacer()
                     Button("Change Instruments") {
                         isShowTaughtInstruments.toggle()
                     }
-                    .padding(20)
+                    .padding(10)
                     .background(Color.red)
                     .foregroundColor(.white)
                     .sheet(isPresented: $isShowTaughtInstruments ) {

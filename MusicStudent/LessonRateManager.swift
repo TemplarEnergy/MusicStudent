@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 class LessonRateManager {
     static let shared = LessonRateManager()
     
@@ -48,40 +46,31 @@ class LessonRateManager {
                return []
            }
        }
-    func findLessonDurationRate(duration: String, multiplier: Int) -> String? {
-   /*     guard let encodedData = UserDefaults.standard.data(forKey: "lessonRateKey") else {
-            return nil // Return nil if data is not found
-        }
-*/
+    func findLessonDurationRate(duration: String, firstName: String, lastName: String) -> Double {
+        let students = DatabaseManager.shared.loadStudents()
         do {
             let data = try Data(contentsOf: lessonRatePlistURL)
             let decoder = PropertyListDecoder()
             let lessonRate = try decoder.decode([LessonRate].self, from: data)
-     //       let lessonRates = try JSONDecoder().decode([LessonRate].self, from: encodedData)
-            // Find the lesson rate with the specified duration
-            if let aLessonRate = lessonRate.first(where: { $0.duration == duration }) {
-                // Assuming `fee` is a property representing the lesson rate
-                if let rate = Int(aLessonRate.fee) {
-                    let multipliedRate = rate * multiplier
-                    return String(multipliedRate) // Convert the multiplied rate back to a string
+            if let foundLessonRate = lessonRate.first(where: { $0.duration == duration }) {
+                if let rate = Double(foundLessonRate.fee) {
+                    if let student = students.first (where: { $0.firstName == firstName && $0.lastName == lastName}) {
+                        return rate * student.multiplier
+                    }else {
+                        return 0.0
+                    }
+                    
                 } else {
-                    return nil // Return nil if the rate cannot be converted to an integer
+                    return 0.0
                 }
             } else {
-                return nil // Return nil if the duration is not found
+                return 0.0  // Return nil if the duration is not found
             }
         } catch {
             print("Error decoding lesson rate: \(error)")
-            return nil // Return nil if decoding fails
+            return 0.00 // Return nil if decoding fails
         }
     }
 
-/*    private func getPlistURL() -> URL? {
-        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            return nil
-        }
-
-        return documentsDirectory.appendingPathComponent("LessonRate.plist")
-    }*/
 }
 

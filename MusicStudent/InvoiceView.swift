@@ -29,10 +29,9 @@ class InvoiceViewModel: ObservableObject {
         
         // Loop over lesson items
         for lesson in student.lessons {
-            let priceString = findRate(duration: lesson.duration, multiplier: student.multiplier)
-            if let price = Double(priceString) {
+            let price = findRate(duration: lesson.duration, firstName: student.firstName, lastName: student.lastName)
+          
                 totalPrice += price
-            }
         }
         let formattedTotalPrice  = String(format: "%.2f", totalPrice)
         return formattedTotalPrice
@@ -365,8 +364,9 @@ private struct LessonView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                         Spacer()
                         
-                        Text("£\(findRate(duration: lesson.duration, multiplier: student.multiplier))")
+                        Text("£\(String(format: "%.2f", findRate(duration: lesson.duration, firstName: student.firstName, lastName: student.lastName)))")
                             .frame(maxWidth: .infinity, alignment: .leading)
+
                             
                     }
                 }
@@ -498,15 +498,11 @@ private func LetterDate() -> String {
     return dateFormatter.string(from: Date())
 }
 
-func findRate(duration: String, multiplier: Int) -> String {
-    var priceText = ""
-    if let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, multiplier: multiplier) {
-        priceText = "\(price)"
-    }
-    else {
-        priceText = "0.00"
-    }
-    return priceText
+func findRate(duration: String, firstName: String, lastName: String) -> Double {
+    
+    let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, firstName: firstName, lastName: lastName)
+        
+    return price
 }
 
 

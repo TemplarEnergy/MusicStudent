@@ -91,7 +91,7 @@ public struct ContentView: View {
         lessons: [],
         kit: [],
         active: true,
-        multiplier: 1
+        multiplier: 1.0
     )
     
     

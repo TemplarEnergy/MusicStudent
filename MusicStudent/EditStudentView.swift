@@ -32,7 +32,7 @@ struct EditStudentView: View {
     @State private var editedLessons: [Student.Lesson]
     @State private var editedKit: [Student.KitItem]
     @State private var editedActive: Bool
-    @State private var editedMultiplier: Int
+    @State private var editedMultiplier: Double
     
     @State private var timer: Timer?
     @State private var showKitAlert = false
@@ -109,7 +109,7 @@ struct EditStudentView: View {
         _editedLessons = State(initialValue: editedStudent.wrappedValue?.lessons ?? [])
         _editedKit = State(initialValue: editedStudent.wrappedValue?.kit ?? [])
         _editedActive = State(initialValue: editedStudent.wrappedValue?.active ?? true)
-        _editedMultiplier = State(initialValue: editedStudent.wrappedValue?.multiplier ?? 1)
+        _editedMultiplier = State(initialValue: editedStudent.wrappedValue?.multiplier ?? 1.0)
         
         self.onDeleteKitItem = onDeleteKitItem
         self.onDeleteLesson = onDeleteLesson
@@ -317,9 +317,9 @@ struct EditStudentView: View {
                                             Text(" ")
                                         }
                                         VStack(alignment: .leading) {
-                                            Text(findRate(duration: editedLessons[index].duration, multiplier: editedMultiplier))
+                                            Text(findRate(duration: editedLessons[index].duration, studentFirst: editedFirstName, studentLast: editedLastName))
                                                 .foregroundColor(.secondary)
-                                                .frame(width: 40, alignment: .leading)
+                                                .frame(width: 60, alignment: .leading)
                                         }
                                         .padding(.leading, 10)
                                         .padding(.trailing, 10)
@@ -382,6 +382,7 @@ struct EditStudentView: View {
                         
                         
                     }
+                
              //       .padding(30)
                     
                     // Display the kit items
@@ -468,6 +469,7 @@ struct EditStudentView: View {
                             updatedStudent.lessons = editedLessons
                             updatedStudent.active = editedActive
                             updatedStudent.kit = editedKit
+                            updatedStudent.multiplier = editedMultiplier
                             DatabaseManager.shared.updateStudent(updatedStudent)
                             listStudents.append(updatedStudent)                        }
                         //          listStudents.append(editedStudent?)
@@ -485,7 +487,7 @@ struct EditStudentView: View {
                         )
                     }
                     HStack {
-                        Button("Submit") {
+                        Button("Save") {
                             
                             if let unwrappedEditedStudent = editedStudent {
                                 // Update the properties of the existing student
@@ -512,6 +514,7 @@ struct EditStudentView: View {
                                 updatedStudent.lessons = editedLessons
                                 updatedStudent.active = editedActive
                                 updatedStudent.kit = editedKit
+                                updatedStudent.multiplier = editedMultiplier
                                 print("hey ho")
                                 print("Updated Student: \(updatedStudent) in scope number  \(inScopeStudentNumber)")
                                 DatabaseManager.shared.updateStudent(updatedStudent)
@@ -560,7 +563,7 @@ struct EditStudentView: View {
             .padding(30)
             
         }
-    
+        .frame(minWidth: 600, maxWidth: .infinity, minHeight: 1000, maxHeight: .infinity )
     
         .onAppear {
             
@@ -589,6 +592,7 @@ struct EditStudentView: View {
                 editedLessons  = editedStudent?.lessons ?? []
                 editedKit = editedStudent?.kit ?? []
                 editedActive = editedStudent?.active ?? true
+                editedMultiplier = editedStudent?.multiplier ?? 1.0
                 if (editedStudent?.firstName) != nil {
                     //    let ReturnedEditedKit = filterKitItemsForCurrentAndPrecedingMonths(kitItems)
                     
@@ -625,22 +629,11 @@ func filterKitItemsForCurrentAndPrecedingMonths(_ kitItems: [Student.KitItem]) -
     
     return filteredKitItems
 }
-    func findRate(duration: String, multiplier: Int) -> String {
+    func findRate(duration: String, studentFirst: String, studentLast: String) -> String {
         var priceText = ""
-        if let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, multiplier: editedMultiplier) {
-            if let proRatedPrice = Double(price) {
-             //   proRatedPrice *= Double(multiplier)
-                priceText = String(format: "%.2f", proRatedPrice)
-            }
-            else {
-                
-                priceText = "£\(price)"
-            }
-            
-        }
-        else {
-             priceText = "£0.00"
-        }
+        let price = LessonRateManager.shared.findLessonDurationRate(duration: duration, firstName: studentFirst, lastName: studentLast)
+                priceText = String(format: "%.2f", price)
+        
         return priceText
     }
     
@@ -833,7 +826,7 @@ struct EditStudentView_Previews: PreviewProvider {
         lessons: [],
         kit: [],
         active: true,
-        multiplier: 1
+        multiplier: 1.0
     )
     @State private static var headTeacher: HeadTeacher? = HeadTeacher(
         companyName: "",

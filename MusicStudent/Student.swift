@@ -32,7 +32,7 @@ struct Student: Codable, Identifiable, Hashable {
     var lessons: [Lesson]
     var kit: [KitItem]
     var active: Bool
-    var multiplier: Int
+    var multiplier: Double
     
     
     struct KitItem: Identifiable, Codable, Hashable {

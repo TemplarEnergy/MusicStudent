@@ -36,12 +36,13 @@ struct HeadTeacher: Codable, Identifiable, Hashable {
 
 
 struct Rates {
-     static func multiplier(location: String) -> Int {
+     static func multiplier(location: String) -> Double {
         switch location{
         case "90 Romsey Road":
-            return 3;
+            return 3.0;
         default:
-            return 1;
+            return 1.0;
         }
     }
 }
+

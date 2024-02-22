@@ -39,7 +39,7 @@ struct AddStudentView: View {
         ],
         kit: [],
         active: true,
-        multiplier: 1
+        multiplier: 1.0
     )
     
     struct Lesson: Identifiable, Equatable, Codable {
@@ -219,7 +219,7 @@ struct AddStudentView: View {
                             lessons: student.lessons,
                             kit: student.kit,
                             active: student.active,
-                            multiplier: 1
+                            multiplier: 1.0
                         )
                         
                         // Load existing students from the database
@@ -321,7 +321,7 @@ struct AddStudentView_Previews: PreviewProvider {
             lessons: [],
             kit: [],
             active: true,
-            multiplier: 1
+            multiplier: 1.0
         ))
     }
 }

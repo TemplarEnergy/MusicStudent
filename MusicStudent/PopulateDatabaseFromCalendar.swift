@@ -10,6 +10,7 @@ import SwiftUI
 import EventKit
 
 
+
 struct FromCalendar {
     
     static func PopulateStudents(headTeacher: HeadTeacher) {
@@ -17,9 +18,14 @@ struct FromCalendar {
         var testWord: String = ""
         var nominalLessonDay: String = ""
         var validatedLessonTime: Date = Date()
-      
         var calendarIdentifier = ""
-        var multiplier = 1
+        
+        var street = ""
+        var instrument = "Violin"
+        let instrumentList: [String] = InstrumentDataManager.shared.loadInstruments()
+        
+        let otherDiscriptor = ["Online", "online", "ONLINE", "Zoom",  "ZOOM", "zoom", "Skype", "SKYPE", "skype"]
+        
    
         
         // Calculate next month's start and end dates
@@ -49,18 +55,19 @@ struct FromCalendar {
                         let eventLocation = event.location ?? "" // Get the event's location or use an empty string if it's nil
          
                         let locationComponents = eventLocation.components(separatedBy: " ")
-
                         // Take the first three components and join them back into a string
-                        var firstThreeWords = locationComponents.prefix(3).joined(separator: " ")
-            //            print("first three words \(firstThreeWords)")
+                        let firstThreeWords = locationComponents.prefix(3).joined(separator: " ")
 
-                        // Compare the first three words with your desired string
-                        if firstThreeWords == "90 Romsey Road" {
-                            multiplier = 3
-                        } else {
-                            multiplier = 1
+                      
+                       
+                        switch firstThreeWords {
+                            case let value where instrumentList.contains(value):
+                            instrument = firstThreeWords
+                        case let value where otherDiscriptor.contains(value):
+                            street = ""
+                        default:
+                            street = firstThreeWords
                         }
-                        firstThreeWords = ""
        
                         if let lessonTime = event.startDate {
                             let dateFormatter = DateFormatter()
@@ -72,64 +79,37 @@ struct FromCalendar {
                             testWord = firstWord
                         }
                         
-                        
+                        switch firstThreeWords {
+                            case let value where instrumentList.contains(value):
+                            instrument = firstThreeWords
+                        case let value where otherDiscriptor.contains(value):
+                            street = ""
+                        default:
+                            street = firstThreeWords
+                        }
                         // Load existing students from the database
                         var existingStudents = DatabaseManager.shared.loadStudents()
                         
+                        
+            //            let addressMultiplierRates = AddressMultiplierRateManager.shared.loadAddressMultiplierRates()
+
+
+                        
+            //            print("first three words \(firstThreeWords)")
+
+                        // Compare the first three words with your desired string
+                   
+                      
                         
                         if let unwrappedNominalLessonDay = FromCalendar.dayName(for: lessonNumberDay) {
                             nominalLessonDay = unwrappedNominalLessonDay
                         }
                         
-                        if var existingStudent = DatabaseManager.shared.getStudentByFirstName(testWord), existingStudent.active {
-                            let count = existingStudent.lessons.count
-                            if DatabaseManager.shared.getStudentByLessonTime(validatedLessonTime) != nil {
-                                // Do nothing if the lesson already exists
-                            } else {
-                                let addedLesson = Student.Lesson(
-                                    id: UUID(),
-                                    number: String(count + 1),
-                                    day: nominalLessonDay,
-                                    time: validatedLessonTime,
-                                    duration: durationString
-                                )
-                                existingStudent.lessons.append(addedLesson)
-                                DatabaseManager.shared.updateStudent(existingStudent)
-                            }
+                       
+                        if let existingStudent = DatabaseManager.shared.getStudentByFirstName(testWord), existingStudent.active {
+                            AddressMultiplierRateManager.shared.AddNewLessonExisting( student: existingStudent, name: testWord, street: street, instrument: instrument, day: nominalLessonDay, time: validatedLessonTime, duration: durationString)
                         } else {
-                            // Create a new student
-                            let assumedInstrument = determineAssumedInstrument(event)
-                            let addedLesson = Student.Lesson(
-                                id: UUID(),
-                                number: "1",
-                                day: nominalLessonDay,
-                                time: validatedLessonTime,
-                                duration: durationString
-                            )
-                            let student = Student(
-                                studentNumber: "",
-                                firstName: testWord,
-                                lastName: "",
-                                parentsName: "",
-                                parentsLastName: "",
-                                phoneNumber: "",
-                                phoneNumber2: "",
-                                street1: "",
-                                street2: "",
-                                city: "",
-                                county: "",
-                                country: "UK",
-                                postalCode: "",
-                                email: "",
-                                instrument: assumedInstrument,
-                                nominalDay: nominalLessonDay,
-                                nominalTime: validatedLessonTime,
-                                nominalDuration: durationString,
-                                lessons: [addedLesson],
-                                kit: [],
-                                active: true,
-                                multiplier: multiplier
-                            )
+                            let student = AddressMultiplierRateManager.shared.AddLessonAndStudent( name: testWord, street: street, instrument: instrument, day: nominalLessonDay, time: validatedLessonTime, duration: durationString)
                             existingStudents.append(student)
                             DatabaseManager.shared.saveStudents(existingStudents)
                         }
@@ -203,14 +183,15 @@ struct FromCalendar {
         let date = Calendar.current.date(bySetting: .weekday, value: dayOfWeek, of: Date())!
         return dateFormatter.string(from: date)
     }
-    
+
+    /*
     private static func calculateLessonRate(_ durationString: String) -> Int? {
         // Implementation to calculate the lesson rate based on duration
         // You can use the durationString parameter to determine the rate
         // Return nil if the rate cannot be calculated
         return Int(durationString) // Dummy implementation, replace with actual logic
     }
-    
+    */
     
 
     struct PopulateLessonDatabaseFromCalendar {
@@ -275,13 +256,9 @@ struct FromCalendar {
                                         
                                     }
                                 }
-                                
-                                
                                 // Process each event and add data to the database
-                               
                                 for event in events {
                                     populateLessonsFromEvent(event, headTeacher: headTeacher)
-                                                            
                                 }
                             }
                         }
@@ -304,7 +281,12 @@ struct FromCalendar {
     private static func populateLessonsFromEvent(_ event: EKEvent, headTeacher: HeadTeacher) {
         // Calculate next month's start and end dates
         let nextMonthDates = calculateNextMonthDates()
-            
+        var street = ""
+        var instrument = "Violin"
+        let instrumentList: [String] = InstrumentDataManager.shared.loadInstruments()
+        
+        let otherDiscriptor = ["Online", "online", "ONLINE", "Zoom",  "ZOOM", "zoom", "Skype", "SKYPE", "skype"]
+        
         
         guard let studentName = event.title,
               let lessonTime = event.startDate,
@@ -332,16 +314,30 @@ struct FromCalendar {
         let assumedInstrument = determineAssumedInstrument(event)
         
         // Get the nominal lesson day from the day of the week
-        guard let nominalLessonDay = FromCalendar.dayName(for: lessonNumberDay) else {
+        guard let lessonDay = FromCalendar.dayName(for: lessonNumberDay) else {
             print("Error: Unable to determine nominal lesson day.")
             return
         }
         
+        let eventLocation = event.location ?? "" // Get the event's location or use an empty string if it's nil
+
+        let locationComponents = eventLocation.components(separatedBy: " ")
+        // Take the first three components and join them back into a string
+        let firstThreeWords = locationComponents.prefix(3).joined(separator: " ")
+
+        switch firstThreeWords {
+            case let value where instrumentList.contains(value):
+            instrument = firstThreeWords
+        case let value where otherDiscriptor.contains(value):
+            street = ""
+        default:
+            street = firstThreeWords
+        }
    
         // Check if the student already exists in the database
-        if var existingStudent = DatabaseManager.shared.getStudentByFirstName(studentName), existingStudent.active {
+        if let existingStudent = DatabaseManager.shared.getStudentByFirstName(studentName), existingStudent.active {
             // Update the existing student's lessons with the new lesson
-            let count = existingStudent.lessons.count + 1
+         /*   let count = existingStudent.lessons.count + 1
             let addedLesson = Student.Lesson(
                 id: UUID(),
                 number: String(count),
@@ -349,14 +345,17 @@ struct FromCalendar {
                 time: lessonTime,
                 duration: durationString
             )
+          
             existingStudent.lessons.append(addedLesson)
             DatabaseManager.shared.updateStudent(existingStudent)
+          */
+            AddressMultiplierRateManager.shared.AddNewLessonExisting(student: existingStudent, name: studentName, street: street, instrument: instrument, day: lessonDay, time: lessonTime, duration: durationString)
         } else {
             // Create a new student and add the lesson
-            let addedLesson = Student.Lesson(
+      /*      let addedLesson = Student.Lesson(
                 id: UUID(),
                 number: "1",
-                day: nominalLessonDay,
+                day: lessonDay,
                 time: lessonTime,
                 duration: durationString
             )
@@ -382,10 +381,13 @@ struct FromCalendar {
                 lessons: [addedLesson],
                 kit: [],
                 active: true,
-                multiplier: 1
+                multiplier: 1.0
             )
             
             DatabaseManager.shared.updateStudent(student)
+       */
+            let student = AddressMultiplierRateManager.shared.AddLessonAndStudent(name: studentName, street: street, instrument: assumedInstrument, day: lessonDay, time: lessonTime, duration: durationString)
+            DatabaseManager.shared.addCalendarStudent(student)
         }
     }
 
